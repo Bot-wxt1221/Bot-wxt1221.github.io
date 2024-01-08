@@ -6,16 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name:"Checkout"
+      - name: Checkout
       	uses: actions/checkout@v4
       	with:
         	path: website
         	fetch-depth: 0
-      - name:"Install nodejs"
+      - name: Install nodejs
       	working-directory:website
       	run:|
         	sudo apt install nodejs npm
-      	- name:"Build"
+      	- name: Build
       	working-directory:website
       	run:|
         	npx hexo deploy
