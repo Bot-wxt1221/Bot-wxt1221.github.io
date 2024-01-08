@@ -15,10 +15,12 @@ jobs:
         working-directory: website
         run: |
           sudo apt install nodejs npm
+        
       - name: Build
       	working-directory:website
         run: |
           npx hexo deploy
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
        	with:
