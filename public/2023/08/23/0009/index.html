@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     
+    <meta charset="UTF-8">
+    <title>浅谈OIer的NVIM配置 - Hexo</title>
+    <link rel="shortcut icon" href="/static/img/icon.png">
+    <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
+    
+<link rel="stylesheet" href="/static/kico.css">
+<link rel="stylesheet" href="/static/hingle.css">
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:title" content="浅谈OIer的NVIM配置"/>
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+  <body>
+    <header>
+    <div class="head-title">
+        <h4>Hexo</h4>
+    </div>
+    <div class="head-action">
+        <div class="toggle-btn"></div>
+        <div class="light-btn"></div>
+        <div class="search-btn"></div>
+    </div>
+    <form class="head-search" method="post">
+        <input type="text" name="s" placeholder="搜索什么？">
+    </form>
+    <nav class="head-menu">
+        <a href="/">首页</a>
+        <div class="has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                
+            </div>
+        </div>
+        
+    </nav>
+</header>
+
+    <main>
+    <div class="wrap min">
+        <section class="post-title">
+            <h2>浅谈OIer的NVIM配置</h2>
+            <div class="post-meta">
+                <time class="date">2023.08.23</time>
+            
+            </div>
+        </section>
+        <article class="post-content">
+        
+            <h1 id="浅谈OIer的NVIM配置"><a href="#浅谈OIer的NVIM配置" class="headerlink" title="浅谈OIer的NVIM配置"></a>浅谈OIer的NVIM配置</h1><p>本文因跨平台、软件版本更新等不可控因素，部分内容可能失效，请联系我修改！</p>
+<h2 id="懒者专用"><a href="#懒者专用" class="headerlink" title="懒者专用"></a>懒者专用</h2><p>不建议直接使用！因为路径产生的 BUG 可能很多！</p>
+<p>我的配置文件仓库：<a target="_blank" rel="noopener" href="https://github.com/wxt1221/wxt1221-NvChad">wxt1221-NvChad</a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>某某人在机房配好 Vscode 之后发现卡死了，所以准备用 vim 写代码！</p>
+<p>但是网上资料太少了，特别是针对 OIer 刷题的配置，所以我就来了。</p>
+<p>上效果图：</p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/fd9wcynp.png" alt=""></p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/z81xs7cv.png" alt=""></p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/hymt7myx.png" alt=""></p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/gsvsinza.png" alt=""></p>
+<h2 id="软件选择"><a href="#软件选择" class="headerlink" title="软件选择"></a>软件选择</h2><p>原版 Vim 其实并不好，主要有几点。</p>
+<ul>
+<li><p>众所周知开屏有些敏感话题</p>
+</li>
+<li><p>不好配</p>
+</li>
+</ul>
+<p>不过，Vim 的分支多得很，看了一圈决定是 Nvim！</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>Linux 下的话到你自己发行版的库里面找找就是了。</p>
+<p>Windows的话有 qnvim，也就是基于 Qt 的。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>Nvim 打开还是和 Vim 差不多，但是真正好用的是网上打包好的配置文件！</p>
+<p>隆重推荐 NvChad！（在 github 上有超 1w 的 star）</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/NvChad/NvChad">NvChad/NvChad</a></p>
+<p>安装很简单，在本项目的官网上有详细介绍不同平台的方法</p>
+<p><a target="_blank" rel="noopener" href="https://nvchad.com/docs/quickstart/install">Link</a></p>
+<p><img src="https://cdn.luogu.com.cn/upload/image_hosting/hjq5ehv8.png" alt=""></p>
+<p>另外还有字体的问题，建议使用带 Nerd 字样的字体，<del>我用的是 JetBrains Mono Nerd Font ，应该是没有问题的</del>，<del>不要用这个字体，Nerd Font 不全，FiraCode 和 JetBrains Mono 风格差不多</del>，都有bug！烦死了！，可以先安装 JetBrains Mono 字体，再安装这个：<a target="_blank" rel="noopener" href="https://github.com/wangrunlin/nerd-font-JetBrains-windows">Link</a>，至于怎么换，这个在各个平台上不同，大概率都是你的终端的配置文件里面可以改。</p>
+<h2 id="Vim相关"><a href="#Vim相关" class="headerlink" title="Vim相关"></a>Vim相关</h2><p>Vim 和普通的文本编辑器有很大不同，Vim 的宗旨之一就是能在不碰鼠标的情况下实现很多功能，为了能够容下更多操作，所以 Vim 其实是有模式区分的。</p>
+<p>最常用的是普通模式，在这个模式下可以通过输入冒号进入命令模式。</p>
+<p>还有编辑模式，这个模式顾名思义就是可以编辑文件，按 esc 退出到普通模式。</p>
+<p>命令模式就是输入命令的，这个是 Vim 单独的一套命令，不是 bash，同样是按 esc 退出到普通模式。</p>
+<h2 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键"></a>常用快捷键</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7084462939595341831">Neovim的常见快捷键和命令 - 掘金</a></p>
+<p>可以参考这篇。</p>
+<p>主要是要记住窗口相关的和 tree 相关的。</p>
+<h2 id="继续配置"><a href="#继续配置" class="headerlink" title="继续配置"></a>继续配置</h2><p>然而你发现 NvChad 不能编译运行调试，好难受，<del>马上回到 Vscode</del>。</p>
+<p>其实是可以的，运行和调试是一个东西，所以先说。</p>
+<p>调试依赖于 DAP。</p>
+<p>Nvim 上最好用的 DAP 就是 nvim-dap ，经过了很久的折腾后，终于找到了方法！</p>
+<p>要装一堆插件，进入配置文件夹，Linux在<code>~/.config/nvim</code> ，Windows在<code>$HOME\AppData\Local\nvim</code> ，里面有一个 <code>lua</code> 文件夹打开，进入 <code>plugins</code> 文件夹 ，打开 <code>init.lua</code> 开始编辑。</p>
+<p>这个文件是 Nvim 的包管理器，注意到定义了一个 <code>default_plugins</code> 直接在这里面改就行了，加入这些插件：</p>
+<pre><code>  &#123;&quot;nvim-telescope/telescope.nvim&quot;,lazy=false&#125;,
+  &#123;&quot;ravenxrz/DAPInstall.nvim&quot;,lazy=false&#125;,
+  &#123;&quot;mfussenegger/nvim-dap&quot;,lazy=false&#125;,
+  &#123;&quot;rcarriga/nvim-dap-ui&quot;,lazy=false&#125;,
+  &#123;&quot;theHamsta/nvim-dap-virtual-text&quot;,lazy=false&#125;,
+</code></pre><p>然后退出重进，不出意外就开始下包了。</p>
+<p>这里有一个非常 NTR 的事情，就是我们又要用 Vscode 的东西了，这次使用 Vscode 的调试工具！</p>
+<p>按冒号进入命令行模式开始安装</p>
+<pre><code>:DIInstall ccppr_vsc
+</code></pre><p>就开始跑命令安装了，等到出现了类似于<code>Process exited</code> 的字样就说明成功了。</p>
+<p>还没结束，接下来才是真正的极客！</p>
+<p>在之前打开过的 <code>plugins</code> 文件夹里面有一个 <code>configs</code>文件夹，建立新文件夹 <code>dap</code> 用于写配置文件</p>
+<p><code>dap/icon.lua</code></p>
+<pre><code class="lang-lua">local M=&#123;&#125;
+function M.setup()
+    local dap_breakpoint = &#123;
+        breakpoint = &#123;
+            text = &quot;&quot;,
+            texthl = &quot;LspDiagnosticsSignError&quot;,
+            linehl = &quot;&quot;,
+            numhl = &quot;&quot;,
+        &#125;,
+        rejected = &#123;
+            text = &quot;&quot;,
+            texthl = &quot;LspDiagnosticsSignHint&quot;,
+            linehl = &quot;&quot;,
+            numhl = &quot;&quot;,
+        &#125;,
+        stopped = &#123;
+            text = &quot;&quot;,
+            texthl = &quot;LspDiagnosticsSignInformation&quot;,
+            linehl = &quot;DiagnosticUnderlineInfo&quot;,
+            numhl = &quot;LspDiagnosticsSignInformation&quot;,
+        &#125;,
+    &#125;
+
+    vim.fn.sign_define(&quot;DapBreakpoint&quot;, dap_breakpoint.breakpoint)
+    vim.fn.sign_define(&quot;DapStopped&quot;, dap_breakpoint.stopped)
+    vim.fn.sign_define(&quot;DapBreakpointRejected&quot;, dap_breakpoint.rejected)
+end
+return M
+</code></pre>
+<p>dap/init.lua</p>
+<pre><code class="lang-lua">local M = &#123;&#125;
+
+local function configure()
+end
+
+local function configure_exts()
+end
+
+local function configure_debuggers()
+end
+
+function M.setup()
+    configure() -- Configuration
+    configure_exts() -- Extensions
+    configure_debuggers() -- Debugger
+  require(&quot;plugins.configs.dap.keymap&quot;).setup()
+  require(&quot;plugins.configs.dap.ui&quot;).setup()
+  require(&quot;plugins.configs.dap.icon&quot;).setup()
+  require(&quot;dap.ext.vscode&quot;).load_launchjs(nil, &#123; cppdbg = &#123; &quot;c&quot;, &quot;cpp&quot;, &quot;rust&quot; &#125; &#125;)
+  local dap = require(&#39;dap&#39;)
+  dap.adapters.cppdbg = &#123;
+    id = &#39;cppdbg&#39;,
+    type = &#39;executable&#39;,
+    command = &#39;/home/wxt/.local/share/nvim/dapinstall/ccppr_vsc/extension/debugAdapters/bin/OpenDebugAD7&#39;,
+  &#125;
+end
+
+configure_debuggers()
+
+return M
+</code></pre>
+<p>dap/keymap.lua</p>
+<pre><code class="lang-lua">local M = &#123;&#125;
+
+local whichkey = require &quot;which-key&quot;
+-- local legendary = require &quot;legendary&quot;
+
+-- local function keymap(lhs, rhs, desc)
+--   vim.keymap.set(&quot;n&quot;, lhs, rhs, &#123; silent = true, desc = desc &#125;)
+-- end
+
+function M.setup()
+  local keymap = &#123;
+    l = &#123;
+      name = &quot;DAP&quot;,
+      R = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.run_to_cursor()&lt;cr&gt;&quot;, &quot;Run to Cursor&quot; &#125;,
+      E = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval(vim.fn.input &#39;[Expression] &gt; &#39;)&lt;cr&gt;&quot;, &quot;Evaluate Input&quot; &#125;,
+      C = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.set_breakpoint(vim.fn.input &#39;[Condition] &gt; &#39;)&lt;cr&gt;&quot;, &quot;Conditional Breakpoint&quot; &#125;,
+      U = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.toggle()&lt;cr&gt;&quot;, &quot;Toggle UI&quot; &#125;,
+      b = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_back()&lt;cr&gt;&quot;, &quot;Step Back&quot; &#125;,
+      c = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.continue()&lt;cr&gt;&quot;, &quot;Continue&quot; &#125;,
+      d = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.disconnect()&lt;cr&gt;&quot;, &quot;Disconnect&quot; &#125;,
+      e = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval()&lt;cr&gt;&quot;, &quot;Evaluate&quot; &#125;,
+      g = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.session()&lt;cr&gt;&quot;, &quot;Get Session&quot; &#125;,
+      h = &#123; &quot;&lt;cmd&gt;lua require&#39;dap.ui.widgets&#39;.hover()&lt;cr&gt;&quot;, &quot;Hover Variables&quot; &#125;,
+      S = &#123; &quot;&lt;cmd&gt;lua require&#39;dap.ui.widgets&#39;.scopes()&lt;cr&gt;&quot;, &quot;Scopes&quot; &#125;,
+      i = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_into()&lt;cr&gt;&quot;, &quot;Step Into&quot; &#125;,
+      o = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_over()&lt;cr&gt;&quot;, &quot;Step Over&quot; &#125;,
+      p = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.pause.toggle()&lt;cr&gt;&quot;, &quot;Pause&quot; &#125;,
+      q = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.close()&lt;cr&gt;&quot;, &quot;Quit&quot; &#125;,
+      r = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.repl.toggle()&lt;cr&gt;&quot;, &quot;Toggle Repl&quot; &#125;,
+      s = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.continue()&lt;cr&gt;&quot;, &quot;Start&quot; &#125;,
+      t = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.toggle_breakpoint()&lt;cr&gt;&quot;, &quot;Toggle Breakpoint&quot; &#125;,
+      x = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.terminate()&lt;cr&gt;&quot;, &quot;Terminate&quot; &#125;,
+      u = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_out()&lt;cr&gt;&quot;, &quot;Step Out&quot; &#125;,
+    &#125;,
+  &#125;
+  local opts = &#123;
+    mode = &quot;n&quot;,
+    prefix = &quot;&lt;leader&gt;&quot;,
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = false,
+  &#125;
+  whichkey.register(keymap, opts)
+  --- require(&quot;legendary.integrations.which-key&quot;).bind_whichkey(keymap, opts, false)
+  vim.api.nvim_create_autocmd(&quot;FileType&quot;, &#123;
+        pattern = &quot;cpp&quot;,
+        callback = function()
+            vim.api.nvim_buf_set_keymap(
+                0,
+                &quot;n&quot;,
+                &quot;&lt;F5&gt;&quot;,
+                &quot;:w&lt;CR&gt;:split&lt;CR&gt;:te g++ % -g -DONLINE_JUDGE -std=c++14 -O2 -o %:t:r -fsanitize=address -fsanitize=undefined&lt;CR&gt;i&quot;,
+                &#123; silent = true, noremap = true &#125;
+            )
+        end,
+    &#125;)
+
+  local keymap_v = &#123;
+    l = &#123;
+      name = &quot;Debug&quot;,
+      e = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval()&lt;cr&gt;&quot;, &quot;Evaluate&quot; &#125;,
+    &#125;,
+  &#125;
+  opts = &#123;
+    mode = &quot;v&quot;,
+    prefix = &quot;&lt;leader&gt;&quot;,
+    buffer = nil,
+    silent = true,
+    noremap = true,
+    nowait = false,
+  &#125;
+  whichkey.register(keymap_v, opts)
+  --- require(&quot;legendary.integrations.which-key&quot;).bind_whichkey(keymap_v, opts, false)
+end
+
+return M
+</code></pre>
+<p>dap/ui.lua</p>
+<pre><code class="lang-lua">local M=&#123;&#125;
+function M.setup()
+    require(&quot;nvim-dap-virtual-text&quot;).setup(&#123;
+        commented = true,
+    &#125;)
+
+    local dap, dapui = require(&quot;dap&quot;), require(&quot;dapui&quot;)
+    dapui.setup(&#123;
+        expand_lines = true,
+        icons = &#123; expanded = &quot;&quot;, collapsed = &quot;&quot;, circular = &quot;&quot; &#125;,
+        mappings = &#123;
+            -- Use a table to apply multiple mappings
+            expand = &#123; &quot;&lt;CR&gt;&quot;, &quot;&lt;2-LeftMouse&gt;&quot; &#125;,
+            open = &quot;o&quot;,
+            remove = &quot;d&quot;,
+            edit = &quot;e&quot;,
+            repl = &quot;r&quot;,
+            toggle = &quot;t&quot;,
+        &#125;,
+        layouts = &#123;
+            &#123;
+                elements = &#123;
+                    &#123; id = &quot;scopes&quot;, size = 0.33 &#125;,
+                    &#123; id = &quot;breakpoints&quot;, size = 0.17 &#125;,
+                    &#123; id = &quot;stacks&quot;, size = 0.25 &#125;,
+                    &#123; id = &quot;watches&quot;, size = 0.25 &#125;,
+                &#125;,
+                size = 0.33,
+                position = &quot;right&quot;,
+            &#125;,
+            &#123;
+                elements = &#123;
+                    &#123; id = &quot;repl&quot;, size = 0.45 &#125;,
+                    &#123; id = &quot;console&quot;, size = 0.55 &#125;,
+                &#125;,
+                size = 0.27,
+                position = &quot;bottom&quot;,
+            &#125;,
+        &#125;,
+        floating = &#123;
+            max_height = 0.9,
+            max_width = 0.5, -- Floats will be treated as percentage of your screen.
+            border = vim.g.border_chars, -- Border style. Can be &#39;single&#39;, &#39;double&#39; or &#39;rounded&#39;
+            mappings = &#123;
+                close = &#123; &quot;q&quot;, &quot;&lt;Esc&gt;&quot; &#125;,
+            &#125;,
+        &#125;,
+    &#125;) -- use default
+    dap.listeners.after.event_initialized[&quot;dapui_config&quot;] = function()
+        dapui.open(&#123;&#125;)
+    end
+    dap.listeners.before.event_terminated[&quot;dapui_config&quot;] = function()
+        dapui.close(&#123;&#125;)
+    end
+    dap.listeners.before.event_exited[&quot;dapui_config&quot;] = function()
+        dapui.close(&#123;&#125;)
+    end
+end
+return M
+</code></pre>
+<p>看得懂的可以自行修改其他地方，</p>
+<p>但是你们都要改一个地方就是 <code>dap/init.lua</code> 里面那个路径，改成 <code>OpenDebugAD7</code> 的位置。</p>
+<p>另外 <code>keymap</code>里面 有一个 <code>F5</code> 的地方，下面是编译命令，可以自行修改。</p>
+<p>再回到<code>configs</code> 下的那个 <code>init.lua</code> 就是加了一堆插件的那个，最下面加上</p>
+<pre><code class="lang-lua">require(&quot;plugins.configs.dap.init&quot;).setup()
+</code></pre>
+<h2 id="使用简介"><a href="#使用简介" class="headerlink" title="使用简介"></a>使用简介</h2><p>还是建议和 Vscode 一样用一个文件夹，因为我们的 NTR 设置，所以需要和 Vscode 一样建立 <code>.vscode</code> 文件夹，里面之用 <code>launch.json</code> 即可，里面的 <code>launch.json</code> 不能用中文注释，<code>preTasks</code> 那项要删掉，然后就可以开用了。</p>
+<p>提供一个 <code>launch.json</code> 模板，直接就能用：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/paste/teshpofs">Link</a></p>
+<p>打开一个 C++ 文件，普通模式下按下 <code>F5</code> 就可以编译，<code>Space+l</code> 可以查看调试可以用的命令，<code>Space+l+c</code> 开始调试。看得出来和 Vscode 的调试比较像。</p>
+
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2024/01/03/0010/">CF449B</a></li>
+                
+                
+                    <li>下一篇: <a href="/2023/07/28/0002/">点分治&amp;边分治</a></li>
+                
+            </ul>
+        </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/IDE/" rel="tag">IDE</a><a class="-none-link" href="/tags/Nvim/" rel="tag">Nvim</a><a class="-none-link" href="/tags/OI/" rel="tag">OI</a>
+            </section>
+        
+    
+    </div>
+</main>
+
+    <footer>
+    <div class="buttons">
+        <a class="to-top" href="#"></a>
+    </div>
+    <div class="wrap min">
+        <section class="widget">
+            <div class="row">
+                <div class="col-m-4">
+                    <h3 class="title-recent">最新文章：</h3>
+                    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0007/">网络流随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0008/">摸鱼记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0010/">CF449B</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/08/23/0009/">浅谈OIer的NVIM配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/28/0002/">点分治&边分治</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/21/0004/">CSP2023-S模拟赛（五）赛后总结</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-date">时光机：</h3>
+                    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-tags">标签云：</h3>
+                    <a href="/tags/IDE/" style="font-size: 10px;">IDE</a> <a href="/tags/NOI-Linux/" style="font-size: 10px;">NOI_Linux</a> <a href="/tags/Nvim/" style="font-size: 10px;">Nvim</a> <a href="/tags/OI/" style="font-size: 20px;">OI</a> <a href="/tags/%E5%88%86%E6%B2%BB/" style="font-size: 10px;">分治</a> <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="font-size: 10px;">多项式</a> <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" style="font-size: 10px;">并查集</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/" style="font-size: 10px;">树形结构</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" style="font-size: 15px;">网络流</a>
+                </div>
+            </div>
+        </section>
+        <section class="sub-footer">
+            <p>© 2024 <a href="/">Hexo</a>. All Rights Reserved. Theme By <a href="https://github.com/Dreamer-Paul/Hingle" target="_blank" rel="nofollow">Hingle</a>.</p>
+        </section>
+    </div>
+</footer>
+
+
+<script src="/static/kico.js"></script>
+<script src="/static/hingle.js"></script>
+
+
+<script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>

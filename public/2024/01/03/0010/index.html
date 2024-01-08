@@ -3,7 +3,7 @@
   <head>
      
     <meta charset="UTF-8">
-    <title>2024 年 1 月 - Hexo</title>
+    <title>CF449B - Hexo</title>
     <link rel="shortcut icon" href="/static/img/icon.png">
     <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
     
@@ -15,7 +15,7 @@
 
     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
     <meta property="og:site_name" content="Hexo">
-    <meta property="og:title" content=""/>
+    <meta property="og:title" content="CF449B"/>
     
 <meta name="generator" content="Hexo 7.0.0"></head>
 
@@ -46,75 +46,159 @@
 
     <main>
     <div class="wrap min">
-        <section class="home-title">
+        <section class="post-title">
+            <h2>CF449B</h2>
+            <div class="post-meta">
+                <time class="date">2024.01.03</time>
             
-            <h1>“2024 年 1 月”</h1>
+            </div>
         </section>
-        <section class="home-posts">
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0007/">网络流随笔</a>
-        </h2>
-    
-        <p>最大流：
-常用于有奇奇怪怪约束条件的最大值问题，可输出方案。
-最小割：
-约束条件为满足 A 则不能满足 B 此类的最小值问题。
-也可以解决图论上与割有关的问题。
-具有阶段的问题可以分层。
-删边的...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a>，<a class="-none-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></span>
-            
-        </div>
-    </div>
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0008/">摸鱼记录</a>
-        </h2>
-    
-        <p>12.29上午模拟赛，切了T1，T2，感觉是简单题，不过做题策略（手推样例）对分数及时间起了很大作用。
-T3看题解也有点抽象，算了，摆。
-T4人类智慧出现了，希望有人给出严谨证明。
-下午14:0...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a></span>
-            
-        </div>
-    </div>
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0010/">CF449B</a>
-        </h2>
-    
-        <p>题目简述有一张边带权的无向图，边分成两种，第一种无特殊限制，第二种边有一个端点在 $1$ 号节点，问至多可以删多少条边可以使原图从 $1$ 到所有点的最短路长度不变。
-分析很容易注意到需要跑单源...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a>，<a class="-none-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></span>
-            
-        </div>
-    </div>
-    
-</section>
+        <article class="post-content">
+        
+            <h2 id="题目简述"><a href="#题目简述" class="headerlink" title="题目简述"></a>题目简述</h2><p>有一张边带权的无向图，边分成两种，第一种无特殊限制，第二种边有一个端点在 $1$ 号节点，问至多可以删多少条边可以使原图从 $1$ 到所有点的最短路长度不变。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>很容易注意到需要跑单源最短路，由于题目中要求的是使最短路不变的情况，所以考虑是否可以在最短路过程中 DP 转移下功夫，很明显需要优先从第一种边转移，于是在转移的过程中注意一下转移过去的值相等时如何更新即可，因为最短路的转移过程没有后效性，所以这样转移是正确的。</p>
+<p>最后统计没有进行 DP 转移的边的数量即可。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;queue&gt;
+#define int long long
+inline int read();
+int fir[100005];
+int nxt[800005];
+int v[800005];
+int w[800005];
+int knd[800005];
+int now=0;
+bool vised[100005];
+class node&#123;
+    public:
+        int x,y;
+        node(int xx,int yy)&#123;
+            x=xx;
+            y=yy;
+        &#125;
+&#125;;
+bool operator &lt; (node a,node b)&#123;
+    return a.y&gt;b.y;
+&#125;
+std::priority_queue&lt;node&gt;qu;
+int from[100005];
+int dp[100005];
+int used[800005];
+void add(int xx,int yy,int zz,int kk)&#123;
+    now++;
+    knd[now]=kk;
+    v[now]=yy;
+    w[now]=zz;
+    nxt[now]=fir[xx];
+    fir[xx]=now;
+    return ;
+&#125;
+signed main()&#123;
+    #ifdef ONLINE_JUDGE
+    #else
+    freopen(&quot;.in&quot;,&quot;r&quot;,stdin);
+    freopen(&quot;.out&quot;,&quot;w&quot;,stdout);
+    #endif
+    int n=read(),m,k;
+    m=read();
+    k=read();
+    for(int i=1;i&lt;=n;i++)&#123;
+        fir[i]=-1;
+        dp[i]=0x3f3f3f3f3f3f3f3fll;
+    &#125;
+    for(int i=1;i&lt;=m;i++)&#123;
+        int xx=read(),yy,zz;
+        yy=read();
+        zz=read();
+        add(xx,yy,zz,0);
+        add(yy,xx,zz,0);
+    &#125;
+    for(int i=1;i&lt;=k;i++)&#123;
+        int s=read();
+        int y=read();
+        add(1,s,y,1);
+        add(s,1,y,1);
+    &#125;
+    dp[1]=0;
+    qu.push(node(1,0));
+    while(qu.size()&gt;0)&#123;
+        node noww=qu.top();
+        qu.pop();
+        int now=noww.x;
+        if(vised[now])&#123;
+            continue;
+        &#125;
+        vised[now]=1;
+        for(int i=fir[now];i!=-1;i=nxt[i])&#123;
+            if(dp[now]+w[i]&lt;dp[v[i]])&#123;
+                dp[v[i]]=dp[now]+w[i];
+                used[from[v[i]]]=0;
+                used[i]=1;
+                from[v[i]]=i;
+                if(!vised[v[i]])
+                    qu.push(node(v[i],dp[v[i]]));
+            &#125;else if(dp[now]+w[i]==dp[v[i]]&amp;&amp;knd[from[v[i]]]==1)&#123;
+                used[from[v[i]]]=0;
+                used[i]=1;
+                from[v[i]]=i;
+            &#125;
+        &#125;
+    &#125;
+    int ans=0;
+    for(int i=m*2+1;i&lt;=m*2+k*2;i+=2)&#123;
+        if(!used[i]&amp;&amp;!used[i+1])&#123;
+            ans++;
+        &#125;
+    &#125;
+    printf(&quot;%lld&quot;,ans);
+    return 0;
+&#125;
+inline int read()&#123;
+    int x=0,f=1;char c=getchar();
+    while(c&lt;&#39;0&#39;||c&gt;&#39;9&#39;)&#123;
+        c==&#39;-&#39;?f=-1:1;
+        c=getchar();
+    &#125;
+    while(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;)&#123;
+        x=(x&lt;&lt;3)+(x&lt;&lt;1)+(c^48);
+        c=getchar();
+    &#125;
+    return f*x;
+&#125;
+/*
+Anything about this program:
+Type:
 
-        <section class="page-navigator">
-            <span class="page-number current">1</span>
+Description:
+
+Example:
+    1:
+        In:
+
+        Out:
+More:
+
+*/
+</code></pre>
+
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2024/01/03/0008/">摸鱼记录</a></li>
+                
+                
+                    <li>下一篇: <a href="/2023/08/23/0009/">浅谈OIer的NVIM配置</a></li>
+                
+            </ul>
         </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/OI/" rel="tag">OI</a><a class="-none-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a>
+            </section>
+        
+    
     </div>
 </main>
 

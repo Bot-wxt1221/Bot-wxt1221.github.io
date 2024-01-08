@@ -3,7 +3,7 @@
   <head>
      
     <meta charset="UTF-8">
-    <title>2024 年 1 月 - Hexo</title>
+    <title>CSP2023-S模拟赛（五）赛后总结 - Hexo</title>
     <link rel="shortcut icon" href="/static/img/icon.png">
     <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
     
@@ -15,7 +15,7 @@
 
     <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
     <meta property="og:site_name" content="Hexo">
-    <meta property="og:title" content=""/>
+    <meta property="og:title" content="CSP2023-S模拟赛（五）赛后总结"/>
     
 <meta name="generator" content="Hexo 7.0.0"></head>
 
@@ -46,75 +46,44 @@
 
     <main>
     <div class="wrap min">
-        <section class="home-title">
+        <section class="post-title">
+            <h2>CSP2023-S模拟赛（五）赛后总结</h2>
+            <div class="post-meta">
+                <time class="date">2023.07.21</time>
             
-            <h1>“2024 年 1 月”</h1>
+            </div>
         </section>
-        <section class="home-posts">
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0007/">网络流随笔</a>
-        </h2>
-    
-        <p>最大流：
-常用于有奇奇怪怪约束条件的最大值问题，可输出方案。
-最小割：
-约束条件为满足 A 则不能满足 B 此类的最小值问题。
-也可以解决图论上与割有关的问题。
-具有阶段的问题可以分层。
-删边的...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a>，<a class="-none-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></span>
-            
-        </div>
-    </div>
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0008/">摸鱼记录</a>
-        </h2>
-    
-        <p>12.29上午模拟赛，切了T1，T2，感觉是简单题，不过做题策略（手推样例）对分数及时间起了很大作用。
-T3看题解也有点抽象，算了，摆。
-T4人类智慧出现了，希望有人给出严谨证明。
-下午14:0...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a></span>
-            
-        </div>
-    </div>
-    
-    <div class="post-item">
-        <h2>
-            <a href="/2024/01/03/0010/">CF449B</a>
-        </h2>
-    
-        <p>题目简述有一张边带权的无向图，边分成两种，第一种无特殊限制，第二种边有一个端点在 $1$ 号节点，问至多可以删多少条边可以使原图从 $1$ 到所有点的最短路长度不变。
-分析很容易注意到需要跑单源...</p>
-    
-        <div class="post-meta">
-            <time class="date">2024.01.03</time>
-            
-            
-                <span class="tags"><a class="-none-link" href="/tags/OI/" rel="tag">OI</a>，<a class="-none-link" href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" rel="tag">网络流</a></span>
-            
-        </div>
-    </div>
-    
-</section>
+        <article class="post-content">
+        
+            <h1 id="CSP2023-S模拟赛（五）赛后总结"><a href="#CSP2023-S模拟赛（五）赛后总结" class="headerlink" title="CSP2023-S模拟赛（五）赛后总结"></a>CSP2023-S模拟赛（五）赛后总结</h1><h2 id="生成树"><a href="#生成树" class="headerlink" title="生成树"></a>生成树</h2><h3 id="简要题解"><a href="#简要题解" class="headerlink" title="简要题解"></a>简要题解</h3><p>最小生成树依次连接 $i$ 和 $i+1$ ，最小为 $n-1$ 。</p>
+<p>最大生成树从大到小枚举边权，然后这个边权的倍数都可以连接，因为这些点的最大公因数一定是当前枚举的边权的整倍数，一定在枚举这个边权之前枚举了，并查集判断是否已连接即可。</p>
+<p>时间复杂度比较难说，但是很容易看到随着 $n$ 增大，时间复杂度肯定越大，经测试最大的 $n$ 能够跑过，所以没问题。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>考虑最小/大生成树的经典算法，是每次找剩余的边权中最大的，所以考虑从大到小枚举，同时推出正确性，其实是不难想到的。</p>
+<h2 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h2><h3 id="简要题解-1"><a href="#简要题解-1" class="headerlink" title="简要题解"></a>简要题解</h3><p>考虑DP，式子推出后用矩阵乘法改写，然后优化。</p>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>DP推出后，可从DP式本身出发，也可以考虑改写为矩阵乘法甚至是广义矩阵乘法，在发现DP状态数较多的情况下，可以考虑DP转移本身需要哪些信息，哪些信息可以合并，从而降低时间复杂度和空间时间度。</p>
+<h2 id="魔力"><a href="#魔力" class="headerlink" title="魔力"></a>魔力</h2><h3 id="简要题解-2"><a href="#简要题解-2" class="headerlink" title="简要题解"></a>简要题解</h3><p>计算移动每个点会造成的差值，会发现他们互相不影响，排序即可。</p>
+<h3 id="总结-2"><a href="#总结-2" class="headerlink" title="总结"></a>总结</h3><p>对于计数问题，可以考虑每种操作对最终答案的影响，根据题目中信息将在线问题转换为离线问题。</p>
+<h2 id="时空结构"><a href="#时空结构" class="headerlink" title="时空结构"></a>时空结构</h2><h3 id="简要题解-3"><a href="#简要题解-3" class="headerlink" title="简要题解"></a>简要题解</h3><p>访问过程中，考虑祖先节点对儿子的影响，然后将式子化简得出结论。</p>
+<h3 id="总结-3"><a href="#总结-3" class="headerlink" title="总结"></a>总结</h3><p>对于每个节点可以拆开计算的问题，可以考虑分别拆开然后处理出每个值然后合并。</p>
+<p>树上问题可以考虑拆成一条条链来处理。</p>
 
-        <section class="page-navigator">
-            <span class="page-number current">1</span>
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2023/07/28/0002/">点分治&amp;边分治</a></li>
+                
+                
+                    <li>下一篇: <a href="/2023/07/08/0005/">NOI Linux2.0考场环境使用指南</a></li>
+                
+            </ul>
         </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/OI/" rel="tag">OI</a>
+            </section>
+        
+    
     </div>
 </main>
 

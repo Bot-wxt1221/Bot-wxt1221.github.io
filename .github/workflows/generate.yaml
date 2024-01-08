@@ -19,7 +19,6 @@ jobs:
       - name: Install nodejs
         working-directory: website
         run: |
-          rm -rf public
           git submodule update --init
           sudo apt-get update
           sudo apt-get install nodejs npm
@@ -27,8 +26,10 @@ jobs:
       - name: Build
         working-directory: website
         run: |
+          npx hexo clean
           npx hexo generate
           npx hexo deploy
+          cp -rf icon.png public/static/img
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     
+    <meta charset="UTF-8">
+    <title>多项式傅里叶变换全家桶 - Hexo</title>
+    <link rel="shortcut icon" href="/static/img/icon.png">
+    <link rel="icon" href="/static/img/icon.png" sizes="192x192"/>
+    
+<link rel="stylesheet" href="/static/kico.css">
+<link rel="stylesheet" href="/static/hingle.css">
+
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1"/>
+    <meta property="og:site_name" content="Hexo">
+    <meta property="og:title" content="多项式傅里叶变换全家桶"/>
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+  <body>
+    <header>
+    <div class="head-title">
+        <h4>Hexo</h4>
+    </div>
+    <div class="head-action">
+        <div class="toggle-btn"></div>
+        <div class="light-btn"></div>
+        <div class="search-btn"></div>
+    </div>
+    <form class="head-search" method="post">
+        <input type="text" name="s" placeholder="搜索什么？">
+    </form>
+    <nav class="head-menu">
+        <a href="/">首页</a>
+        <div class="has-child">
+            <a>分类</a>
+            <div class="sub-menu">
+                
+            </div>
+        </div>
+        
+    </nav>
+</header>
+
+    <main>
+    <div class="wrap min">
+        <section class="post-title">
+            <h2>多项式傅里叶变换全家桶</h2>
+            <div class="post-meta">
+                <time class="date">2023.03.16</time>
+            
+            </div>
+        </section>
+        <article class="post-content">
+        
+            <blockquote>这篇文章上次修改于 299 天前，可能其部分内容已经发生变化，如有疑问可询问作者。</blockquote>
+        
+            <p>卷积：$h_i=\sum _{j=0}^{i}f_j \times g_{i-j}$，其中 $h_i$ 是多项式 $H$ 的 $i$ 次项系数。其实就是多项式乘法。</p>
+<h1 id="FFT（快速傅里叶变换）"><a href="#FFT（快速傅里叶变换）" class="headerlink" title="FFT（快速傅里叶变换）"></a>FFT（快速傅里叶变换）</h1><h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>直接朴素乘会导致太慢了，时间复杂度直逼 $\mathcal{O}(n^2)$，仍然停留在多项式的系数表达式太浅薄了，可以尝试一下点值表达式。</p>
+<p>对于一个有 $n$ 项的多项式，只要取不同的 $n$ 个值即可确定这个多项式，如果直接把两个多项式同时取 $n$ 个值，再把相同 $x$ 值得到的结果相乘，最后转换为系数表达，时间复杂度不会有任何改进，所以可以从取值的方面来下功夫。</p>
+<h2 id="前置知识"><a href="#前置知识" class="headerlink" title="前置知识"></a>前置知识</h2><h5 id="1-虚数：定义虚数单位-i-，保证-i-2-1-，则可以把一个虚数定义为-a-bi-，其中-a-b-是实数。"><a href="#1-虚数：定义虚数单位-i-，保证-i-2-1-，则可以把一个虚数定义为-a-bi-，其中-a-b-是实数。" class="headerlink" title="1. 虚数：定义虚数单位 $i$ ，保证 $i^2=-1$，则可以把一个虚数定义为 $a+bi$，其中 $a,b$ 是实数。"></a>1. 虚数：定义虚数单位 $i$ ，保证 $i^2=-1$，则可以把一个虚数定义为 $a+bi$，其中 $a,b$ 是实数。</h5><h5 id="2-数轴：定义一个平面直角坐标系，横轴为实轴，纵轴为虚轴，这个坐标系定义是复数平面，任意一个点都代表一个实数或虚数，横坐标为其实部，纵坐标为其虚部。"><a href="#2-数轴：定义一个平面直角坐标系，横轴为实轴，纵轴为虚轴，这个坐标系定义是复数平面，任意一个点都代表一个实数或虚数，横坐标为其实部，纵坐标为其虚部。" class="headerlink" title="2. 数轴：定义一个平面直角坐标系，横轴为实轴，纵轴为虚轴，这个坐标系定义是复数平面，任意一个点都代表一个实数或虚数，横坐标为其实部，纵坐标为其虚部。"></a>2. 数轴：定义一个平面直角坐标系，横轴为实轴，纵轴为虚轴，这个坐标系定义是复数平面，任意一个点都代表一个实数或虚数，横坐标为其实部，纵坐标为其虚部。</h5><h5 id="3-模长、幅角：接下来以-x-y-代表从-0-0-到-x-y-的向量，模长记为-x-y-为-x-y-到-0-0-的欧几里得距离，幅角定义为正实部逆时针旋转一个幅角即可与向量重合。"><a href="#3-模长、幅角：接下来以-x-y-代表从-0-0-到-x-y-的向量，模长记为-x-y-为-x-y-到-0-0-的欧几里得距离，幅角定义为正实部逆时针旋转一个幅角即可与向量重合。" class="headerlink" title="3. 模长、幅角：接下来以 $(x,y)$ 代表从 $(0,0)$ 到 $(x,y)$ 的向量，模长记为 $|(x,y)|$ 为 $(x,y)$ 到 $(0,0)$ 的欧几里得距离，幅角定义为正实部逆时针旋转一个幅角即可与向量重合。"></a>3. 模长、幅角：接下来以 $(x,y)$ 代表从 $(0,0)$ 到 $(x,y)$ 的向量，模长记为 $|(x,y)|$ 为 $(x,y)$ 到 $(0,0)$ 的欧几里得距离，幅角定义为正实部逆时针旋转一个幅角即可与向量重合。</h5><p><img src="E:\1.PNG" alt=""></p>
+<h5 id="3-虚数的运算："><a href="#3-虚数的运算：" class="headerlink" title="3. 虚数的运算："></a>3. 虚数的运算：</h5><p>$<del>~</del>~~~~$加减法直接把实部和虚部分别相加即可。</p>
+<p>$<del>~</del>~~~~$乘法在代数意义上的运算：$(a+bi)\times(c+di)$=$ac+adi+bci-bd$=$(ac-bd)+(ad+bc)i$</p>
+<p>$<del>~</del>~~~~$几何意义：幅角相加，模长相乘。</p>
+<h5 id="4-单位根"><a href="#4-单位根" class="headerlink" title="4.单位根"></a>4.单位根</h5><p>$<del>~</del>~~~~$定义 $\omega_n$ 为 $\omega_n^n=1$，很容易推出其中一个单位根为模长为1，幅角为$360/n$，很容易想到这个数自乘 $n$ 次，旋转 $360$度，与正实轴重合，模长为1，$\omega_n^k$也满足${(\omega_n^k)}^n=1$，证明同理。</p>
+<h5 id="5-单位根性质"><a href="#5-单位根性质" class="headerlink" title="5.单位根性质"></a>5.单位根性质</h5><p>$<del>~</del>~~~~$ $\omega_n^k=\omega_{n/2}^{k/2}$ ，证明：$\omega_n^k$为模长为1，幅角为$\frac{360k}{n}$度，$\omega_{n/2}^{k/2}$也是一样的。</p>
+<p>$<del>~</del>~~~~$ $\omega_n^{k}=-\omega_n^{k+n/2}$, 证明：多转了180度，所以就是相反数。</p>
+<p>$<del>~</del>~~~~$ $\omega_n^0=\omega_n^n=1$，由定义得。</p>
+<p>$<del>~</del>~~~~$ $\omega_n^{k}=\omega_n^{n+k}$，证明：转360度转回来了。</p>
+<h2 id="正向FFT（系数到点值）"><a href="#正向FFT（系数到点值）" class="headerlink" title="正向FFT（系数到点值）"></a>正向FFT（系数到点值）</h2><p>可以代入所有的单位根，为了统一计算，把所有的多项式补全到 $2^k$，其中k是满足 $2^k \leq n+m+1$的最小值。高次项全部补0即可。</p>
+<p>$A(x)=(a_0+a_1x+a_2x^2+…+a_{n-1}x^{n-1})$</p>
+<p>按照次数奇偶性分组，$A(x)=(a_0+a_2x^2+…+a_{n-2}x^{n-2})+(a_1x+a_3x^3+…+a_{n-1}x^{n-1})$</p>
+<p>继续定义 B(x)=a_0+a_2x+a_4x^2+…+a_{n-2}x^{(n-2)/2}$</p>
+<p>$C(x)=a_1+a_3x+a_5x^2+…+a_{n-1}x^{(n-2)/2}$</p>
+<p>则 $A(x)=B(x^2)+xC(x^2)$</p>
+<p>将 $\omega_n^k$ 代入原式得 $A(\omega_n^k)=B(\omega_n^{2k})+\omega_n^kC(\omega_n^{2k})$，因为相比原式项数减半所以把 $\omega_n^{2k}$ 化为 $\omega_{n/2}^k$得 $A(\omega_n^k)=B(\omega_{n/2}^k)+\omega_n^kC(\omega_{n/2}^k)$</p>
+<p>$B,C$递归处理即可。</p>
+<h2 id="IFFT（逆变换）"><a href="#IFFT（逆变换）" class="headerlink" title="IFFT（逆变换）"></a>IFFT（逆变换）</h2><p>上面算出来了点值表示法，如何转成系数表达式捏。</p>
+<p>设原多项式的点值表达式在 $\omega_n^k(0 \leq k&lt;n)$ 得到 $y_0,y_1,…,y_{n-1}$</p>
+<p>设多项式 $D(x)=y_0+y_1x+y_2x^2+y_3x^3+…y_{n-1}x^{n-1}$。</p>
+<p>设在 $\omega_n^{-k}(0 \leq k&lt;n)$的 点值表达式是 $z_0,z_1,…,z_{n-1}$。</p>
+<p>可证得$c_k=\sum_{i=0}^{n-1}a_j(\sum^{n-1}_{i=0}(\omega_n^{j-k})^i)$</p>
+<p>核心的就是$\sum^{n-1}_{i=0}(\omega_n^{j-k})^i$，设$S(x)=\sum^{n-1}_{i=0}x^i$</p>
+<p>易证 $S(x)=\frac {1-1}{w_n^k-1}$</p>
+<p>当$w_n^k!=1$时，$S(x)=0$</p>
+<p>当$w_n^k=1$时，$S(x)=n$</p>
+<p>代入得$c_k=na_k$</p>
+<p>所以 $a_k=c_k/n$</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>递归实现容易爆栈，而且极其慢，考虑优化为迭代实现。</p>
+<p>优化为迭代实现的瓶颈在于如何划分系数，不过可以非常简单的把需要合并在一起的项放在一起。</p>
+<p>只有一项的多项式，点值表达式和系数表达式是一样的。</p>
+<p>因为上述按奇偶性分开，其实是按照下标二进制表达从后往前来比较的来划分的，相同的会放在一起，所以可以直接按照下表二进制反转的顺序来依次合并。</p>
+<pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;complex&gt;
+#include &lt;cmath&gt;
+#define int long long
+inline int read();
+const double Pi=acos(-1.0);
+std::complex &lt;double&gt; f[8000005],g[8000005],ans[8000005];
+int r[8000005];
+void fft(std::complex &lt;double&gt; *f,int limit,int type);
+signed main()&#123;
+    int n=read(),m;
+
+    std::complex &lt;double&gt; temp=f[0];
+    m=read();
+    int limit=1,k=0;
+    while(limit&lt;(n+m+2))&#123;
+        limit=(limit)&lt;&lt;1;
+        k++;
+    &#125;
+    for(int i=0;i&lt;=n;i++)&#123;
+        f[i]=read();
+    &#125;
+    for(int i=0;i&lt;=m;i++)&#123;
+        g[i]=read();
+    &#125;
+    for(int i=0;i&lt;=limit;i++)&#123;
+        r[i]=(r[i&gt;&gt;1]&gt;&gt;1)|((i&amp;1)&lt;&lt;(k-1));
+    &#125;
+    fft(f,limit,1);
+    fft(g,limit,1);
+    for(int i=0;i&lt;=limit;i++)&#123;
+        f[i]*=g[i];
+    &#125;
+    fft(f,limit,-1);
+    for(int i=0;i&lt;=n+m;i++)&#123;
+        printf(&quot;%lld &quot;,(int)(f[i].real()/(limit)+0.5));
+    &#125;
+    return 0;
+&#125;
+inline int read()&#123;
+    int x=0,f=1;char c=getchar();
+    while(c&lt;&#39;0&#39;||c&gt;&#39;9&#39;)&#123;
+        c==&#39;-&#39;?f=-1:1;
+        c=getchar();
+    &#125;
+    while(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;)&#123;
+        x=(x&lt;&lt;3)+(x&lt;&lt;1)+(c^48);
+        c=getchar();
+    &#125;
+    return f*x;
+&#125;
+void fft(std::complex &lt;double&gt; *f,int limit,int type)&#123;
+    for(int i=0;i&lt;=limit;i++)&#123;
+        if(i&lt;r[i])&#123;
+            swap(f[i],f[r[i]]);
+        &#125;
+    &#125;
+    for(int length=2;length&lt;=limit;length=(length&lt;&lt;1))&#123;
+        std::complex &lt;double&gt; Wn (std::cos(Pi*2/length),std::sin(type*Pi*2/length));
+        for(int i=0;i&lt;=limit;i+=length)&#123;
+            std::complex &lt;double&gt; wn1(1,0);
+            for(int k=i;k&lt;length/2+i;k++,wn1=wn1*Wn)&#123;
+                std::complex &lt;double&gt; x=f[k],y=f[k+length/2]*wn1;
+                f[k]=x+y;
+                f[k+length/2]=x-y;
+            &#125;
+        &#125;
+    &#125;
+    return ;
+&#125;
+</code></pre>
+<h1 id="NTT-快速数论变换"><a href="#NTT-快速数论变换" class="headerlink" title="NTT (快速数论变换)"></a>NTT (快速数论变换)</h1><h2 id="思想-1"><a href="#思想-1" class="headerlink" title="思想"></a>思想</h2><p>因为FFT涉及到复杂的复数运算，不仅很慢，不能取模，甚至有精度问题。</p>
+<p>所有如果在取模意义下，也可以用与FFT所利用的的单位根相似的原根。</p>
+<h2 id="数学知识"><a href="#数学知识" class="headerlink" title="数学知识"></a>数学知识</h2><p>原根的定义理所当然，定义一个数 $n$ 的原根为 $g$ ，是满足$g^n \equiv 1(mod~p)$的最小整数。</p>
+<p>原根满足 $g^i(1 \leq i \leq n)$ 模 $p$ 两两不同。</p>
+<p>一般取模数为 $998244353$ ，其原根是 $3$。</p>
+<p>对于代值的数的表示仍然是$\omega_n$：</p>
+<p>$w_n \equiv g^{\frac{p-1}{n}} (mod~p)$</p>
+<p>$\omega_n^k=\omega_{n/2}^{k/2}$ 。</p>
+<p>$\omega_n^{k}=-\omega_n^{k+n/2}$。</p>
+<p>$\omega_n^0=\omega_n^n=1$。</p>
+<p>$\omega_n^{k}=\omega_n^{n+k}$。</p>
+<h2 id="直接把FFT的代值改成NTT"><a href="#直接把FFT的代值改成NTT" class="headerlink" title="直接把FFT的代值改成NTT"></a>直接把FFT的代值改成NTT</h2><pre><code class="lang-cpp">#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#define int long long
+inline int read();
+int a[8000005],b[8000005];
+int li=1,k=0;
+int r[8000005];
+const int mod=998244353;
+const int g=3;
+const int g2=332748118;
+void print(int x)&#123;
+    register char s[20];
+    register int i=0;
+    if(x&lt;0)&#123;
+        x=-x;
+        putchar(&#39;-&#39;);
+    &#125;
+    if(x==0)&#123;
+        putchar(&#39;0&#39;);
+        return;
+    &#125;
+    while(x)&#123;
+        s[i++]=x%10;
+        x/=10;
+    &#125;
+    while(i)&#123;
+        putchar(s[--i]+&#39;0&#39;);
+    &#125;
+    return;
+&#125;
+inline int fast_power(int a, int k) //快速幂，a为底数，k为指数
+&#123;
+    register int res = 1;
+    while (k)
+    &#123;
+        if (k &amp; 1)
+            res = res * a % mod;
+        a = a * a % mod;
+        k &gt;&gt;= 1;
+    &#125;
+    return res;
+&#125;
+inline void ntt(int *a,int type)&#123;
+    for(register int i=0;i&lt;=li;i++)&#123;
+        if(i&lt;r[i])&#123;
+            std::swap(a[i],a[r[i]]);
+        &#125;
+    &#125;
+    int gn;
+    for(register int i=1;i&lt;li;i&lt;&lt;=1)&#123;
+        gn=fast_power(type?g:g2,(mod-1)/(i&lt;&lt;1));
+        for(register int j=0;j&lt;li;j+=(i&lt;&lt;1))&#123;
+            int g0=1;
+            for(int k=0;k&lt;i;k++,g0=(g0*gn)%mod)&#123;
+                int x=a[j+k];
+                int y=(a[i+j+k]*g0)%mod;
+                a[j+k]=(x+y)%mod;
+                a[i+j+k]=(x-y+mod)%mod;
+            &#125;
+        &#125;
+    &#125;
+    return ;
+&#125;
+signed main()&#123;
+    #ifdef ONLINE_JUDGE
+    #else
+    // freopen(&quot;.in&quot;,&quot;r&quot;,stdin);
+    // freopen(&quot;.out&quot;,&quot;w&quot;,stdout);
+    #endif
+    int n=read(),m=read();
+    for(register int i=0;i&lt;=n;i++)&#123;
+        a[i]=read();
+    &#125;
+    for(register int i=0;i&lt;=m;i++)&#123;
+        b[i]=read();
+    &#125;
+    while(li&lt;(n+m+2))&#123;
+        li=(li)&lt;&lt;1;
+        k++;
+    &#125;
+    for(register int i=0;i&lt;=li;i++)&#123;
+        r[i]=(r[i&gt;&gt;1]&gt;&gt;1)|((i&amp;1)&lt;&lt;(k-1));
+    &#125;
+    ntt(a,1);
+    ntt(b,1);
+    for(register int i=0;i&lt;=li;i++)&#123;
+        a[i]*=b[i];
+        a[i]%=mod;
+    &#125;
+    ntt(a,0);
+    long long inv=fast_power(li,mod-2);
+    for(register int i=0;i&lt;=n+m;i++)&#123;
+        print((a[i]*inv)%mod);
+        putchar(&#39; &#39;);
+    &#125;
+    return 0;
+&#125;
+inline int read()&#123;
+    int x=0,f=1;char c=getchar();
+    while(c&lt;&#39;0&#39;||c&gt;&#39;9&#39;)&#123;
+        c==&#39;-&#39;?f=-1:1;
+        c=getchar();
+    &#125;
+    while(c&gt;=&#39;0&#39;&amp;&amp;c&lt;=&#39;9&#39;)&#123;
+        x=(x&lt;&lt;3)+(x&lt;&lt;1)+(c^48);
+        c=getchar();
+    &#125;
+    return f*x;
+&#125;
+/*
+Anything about this program:
+Type:
+
+Description:
+
+Example:
+    1:
+        In:
+
+        Out:
+More:
+
+*/
+</code></pre>
+<h1 id="扩展题目"><a href="#扩展题目" class="headerlink" title="扩展题目"></a>扩展题目</h1>
+        </article>
+        <section class="post-near">
+            <ul>
+                
+                    <li>上一篇: <a href="/2023/05/26/0006/">序列解题报告</a></li>
+                
+                
+                    <li>下一篇: 看完啦 (つд⊂)</li>
+                
+            </ul>
+        </section>
+        
+            <section class="post-tags">
+            <a class="-none-link" href="/tags/OI/" rel="tag">OI</a><a class="-none-link" href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" rel="tag">多项式</a>
+            </section>
+        
+    
+    </div>
+</main>
+
+    <footer>
+    <div class="buttons">
+        <a class="to-top" href="#"></a>
+    </div>
+    <div class="wrap min">
+        <section class="widget">
+            <div class="row">
+                <div class="col-m-4">
+                    <h3 class="title-recent">最新文章：</h3>
+                    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0007/">网络流随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0008/">摸鱼记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2024/01/03/0010/">CF449B</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/08/23/0009/">浅谈OIer的NVIM配置</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/28/0002/">点分治&边分治</a></li><li class="post-list-item"><a class="post-list-link" href="/2023/07/21/0004/">CSP2023-S模拟赛（五）赛后总结</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-date">时光机：</h3>
+                    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/01/">January 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a></li></ul>
+                </div>
+                <div class="col-m-4">
+                    <h3 class="title-tags">标签云：</h3>
+                    <a href="/tags/IDE/" style="font-size: 10px;">IDE</a> <a href="/tags/NOI-Linux/" style="font-size: 10px;">NOI_Linux</a> <a href="/tags/Nvim/" style="font-size: 10px;">Nvim</a> <a href="/tags/OI/" style="font-size: 20px;">OI</a> <a href="/tags/%E5%88%86%E6%B2%BB/" style="font-size: 10px;">分治</a> <a href="/tags/%E5%A4%9A%E9%A1%B9%E5%BC%8F/" style="font-size: 10px;">多项式</a> <a href="/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/" style="font-size: 10px;">并查集</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a> <a href="/tags/%E6%A0%91%E5%BD%A2%E7%BB%93%E6%9E%84/" style="font-size: 10px;">树形结构</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%B5%81/" style="font-size: 15px;">网络流</a>
+                </div>
+            </div>
+        </section>
+        <section class="sub-footer">
+            <p>© 2024 <a href="/">Hexo</a>. All Rights Reserved. Theme By <a href="https://github.com/Dreamer-Paul/Hingle" target="_blank" rel="nofollow">Hingle</a>.</p>
+        </section>
+    </div>
+</footer>
+
+
+<script src="/static/kico.js"></script>
+<script src="/static/hingle.js"></script>
+
+
+<script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+</body>
+</html>
