@@ -17,7 +17,9 @@
     <meta property="og:site_name" content="Hexo">
     <meta property="og:title" content="点分治&amp;边分治"/>
     
-<meta name="generator" content="Hexo 7.0.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head>
 
   <body>
     <header>
@@ -81,9 +83,7 @@
 <h5 id="引理4："><a href="#引理4：" class="headerlink" title="引理4："></a>引理4：</h5><h6 id="结论：-3"><a href="#结论：-3" class="headerlink" title="结论："></a>结论：</h6><p>假设树上所有边权为 $1$，则记 $dis_i $ 表示所有节点到 $i$ 号节点的距离和，则重心 $u$ 的 $dis_u$ 最小，反命题成立。</p>
 <h6 id="论证：-3"><a href="#论证：-3" class="headerlink" title="论证："></a>论证：</h6><p>很明显对于非重心点 $u$ ，有 $wss(v) &gt; \frac 2 n~ (v \in son_v) $ ，那向 $v$ 移动会使 $dis$ 减少 $siz_u(v)-(n-siz_u(v)=2siz_u(v)-n&gt;0$ ，结论得证。 </p>
 <h5 id="求法："><a href="#求法：" class="headerlink" title="求法："></a>求法：</h5><p>根据定义以及引理1即可</p>
-<pre><code class="lang-cpp">
-
-</code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
         </article>
         <section class="post-near">
@@ -139,21 +139,5 @@
 
 <script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-</body>
+  </body>
 </html>

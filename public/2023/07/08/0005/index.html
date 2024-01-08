@@ -17,7 +17,9 @@
     <meta property="og:site_name" content="Hexo">
     <meta property="og:title" content="NOI Linux2.0考场环境使用指南"/>
     
-<meta name="generator" content="Hexo 7.0.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head>
 
   <body>
     <header>
@@ -69,47 +71,37 @@
 <h3 id="优雅折中的Geany"><a href="#优雅折中的Geany" class="headerlink" title="优雅折中的Geany"></a>优雅折中的Geany</h3><p>Geany非常简单，打开后和Dev-C++非常相像，只可惜不能调试，只能单开终端调试，可以更改编译选项。</p>
 <p><img src="D:\OI\8.PNG" alt="8.PNG"></p>
 <p>更改Build的编译选项即可，可以参照这个来写:</p>
-<pre><code>g++ &quot;%f&quot; -o &quot;%e&quot; -g -Wall -std=c++14 -fsanitize=address,undefined
-</code></pre><p>后面一个神奇的编译选项将在后面提到。调试请参考VSCode的调试部分。</p>
+<pre class="line-numbers language-none"><code class="language-none">g++ &quot;%f&quot; -o &quot;%e&quot; -g -Wall -std&#x3D;c++14 -fsanitize&#x3D;address,undefined<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>后面一个神奇的编译选项将在后面提到。调试请参考VSCode的调试部分。</p>
 <h3 id="VSCode"><a href="#VSCode" class="headerlink" title="VSCode"></a>VSCode</h3><p>听说你想用机房很火的VSCode？哈哈，CCF提供的C/C++插件处于半残废状态，要想编译和调试只能手写JSON，反正我不会。</p>
 <p>但是VSCode的代码高亮等等等很好用，只是要手敲命令行，我认为还好。</p>
 <h4 id="打开工作区"><a href="#打开工作区" class="headerlink" title="打开工作区"></a>打开工作区</h4><p>建议直接打开要求的代码保存目录。</p>
 <p><img src="D:\OI\9.PNG" alt="9.PNG"></p>
 <h4 id="编译及运行"><a href="#编译及运行" class="headerlink" title="编译及运行"></a>编译及运行</h4><p>在bash终端里面输入</p>
-<pre><code class="lang-bash">g++  *.cpp -o * -g -Wall -std=c++14 -fsanitize=address,undefined
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">g++  *.cpp <span class="token parameter variable">-o</span> * <span class="token parameter variable">-g</span> <span class="token parameter variable">-Wall</span> <span class="token parameter variable">-std</span><span class="token operator">=</span>c++14 <span class="token parameter variable">-fsanitize</span><span class="token operator">=</span>address,undefined<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>后面的很复杂的编译选项可以不管，这个是新版本g++加入的新功能，可以一定程度上避免程序的UB行为避免大部分RE。</p>
 <p>运行</p>
-<pre><code class="lang-bash">./*
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./*<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>就可以像在Windows下一样输入了，Ctrl+C强制结束。</p>
 <h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>调试功能依赖于gdb。</p>
 <h5 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h5><p>如果此行没有输入命令，按下回车，会自动执行上一行的内容，容易导致翻车</p>
 <h5 id="使用指南："><a href="#使用指南：" class="headerlink" title="使用指南："></a>使用指南：</h5><p>进入gdb：</p>
-<pre><code class="lang-bash">gdb *
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gdb *<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>查看源代码：</p>
-<pre><code class="lang-bash">list
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>就会列出代码，每次列出 $20$ 行，如果列出，说明可以开始调试，否则编译过程中可能没有加入 -g 选项。</p>
 <p>加入断点：</p>
-<pre><code class="lang-bash">break xxx(行号)
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">break</span> xxx<span class="token punctuation">(</span>行号<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>运行：</p>
-<pre><code class="lang-bash">run
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">run<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>下一步：</p>
-<pre><code class="lang-bash">next
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">next<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>单步进入：</p>
-<pre><code class="lang-bash">step
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">step<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>跳过：</p>
-<pre><code class="lang-bash">continue
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">continue</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>查看变量值：</p>
-<pre><code class="lang-bash">print xxx(变量名)
-</code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">print xxx<span class="token punctuation">(</span>变量名<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>应该只会用这些，多余的可以自行了解。</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28351609/article/details/114855630">扩展</a></p>
 <h3 id="NOI-Linux的其他翻车细节"><a href="#NOI-Linux的其他翻车细节" class="headerlink" title="NOI Linux的其他翻车细节"></a>NOI Linux的其他翻车细节</h3><h4 id="Arbiter"><a href="#Arbiter" class="headerlink" title="Arbiter"></a>Arbiter</h4><p>arbiter别乱用，特别容易崩溃。</p>
@@ -172,21 +164,5 @@
 
 <script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-</body>
+  </body>
 </html>

@@ -17,7 +17,9 @@
     <meta property="og:site_name" content="Hexo">
     <meta property="og:title" content="并查集总结"/>
     
-<meta name="generator" content="Hexo 7.0.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head>
 
   <body>
     <header>
@@ -65,63 +67,61 @@
 
 <p>树上每个元素都可以一直向上遍历直到根节点，所以定义一个集合的代表元是这个集合所在的树的根节点，查询两个数是否在一个集合的时候直接比较代表元即可，因为只涉及到找父亲节点的操作，只用记录每个节点的直接父亲。</p>
 <p>封装形式：</p>
-<pre><code class="lang-cpp">#define MAXN 100000
-class node&#123;
-    public:
-        void Union(int x,int y)&#123;
-            int fx=getfa(x);
-            int fy=getfa(y);
-            fa[fx]=fy;
-            return ;
-        &#125;
-        bool query(int x,int y)&#123;
-            return getfa(x)==getfa(y);
-        &#125;
-        node(int n)&#123;
-            for(int i=1;i&lt;=n;i++)&#123;
-                fa[i]=i;
-            &#125;
-        &#125;
-    private:
-        int getfa(int x)&#123;
-            return x==fa[x]?x:getfa(fa[x]);
-        &#125;
-        int fa[MAXN+5];
-&#125;;
-</code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXN</span> <span class="token expression"><span class="token number">100000</span></span></span>
+<span class="token keyword">class</span> <span class="token class-name">node</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+        <span class="token keyword">void</span> <span class="token function">Union</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span><span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> fx<span class="token operator">=</span><span class="token function">getfa</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> fy<span class="token operator">=</span><span class="token function">getfa</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span><span class="token operator">=</span>fy<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">bool</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span><span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token function">getfa</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">==</span><span class="token function">getfa</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">node</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                fa<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        <span class="token keyword">int</span> <span class="token function">getfa</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> x<span class="token operator">==</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">?</span>x<span class="token operator">:</span><span class="token function">getfa</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">int</span> fa<span class="token punctuation">[</span>MAXN<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上述算法时间复杂度依赖于树高，最坏时间复杂度可能达到 $\mathcal{O}(n)$，所以要优化。</p>
 <h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="启发式合并"><a href="#启发式合并" class="headerlink" title="启发式合并"></a>启发式合并</h2><p>其实就是把较小的集合的子树合并到较大的集合的子树中。</p>
 <h2 id="路径压缩"><a href="#路径压缩" class="headerlink" title="路径压缩"></a>路径压缩</h2><p>每次求父亲回溯的时候，把他的直接父亲赋值为代表元，减小树高。</p>
 <p>优化后封装代码：</p>
-<pre><code class="lang-cpp">#define MAXN 100000
-class node&#123;
-    public:
-        void Union(int x,int y)&#123;
-            int fx=getfa(x);
-            int fy=getfa(y);
-            if(siz[fx]&gt;siz[fy])&#123;
-                std::swap(fx,fy);
-            &#125;
-            fa[fx]=fy;
-            return ;
-        &#125;
-        bool query(int x,int y)&#123;
-            return getfa(x)==getfa(y);
-        &#125;
-        node(int n)&#123;
-            for(int i=1;i&lt;=n;i++)&#123;
-                fa[i]=i;
-                siz[i]=1;
-            &#125;
-        &#125;
-    private:
-        int getfa(int x)&#123;
-            return x==fa[x]?x:fa[x]=getfa(fa[x]);
-        &#125;
-        int fa[MAXN+5];
-        int siz[MAXN+5];
-&#125;;
-</code></pre>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXN</span> <span class="token expression"><span class="token number">100000</span></span></span>
+<span class="token keyword">class</span> <span class="token class-name">node</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span><span class="token operator">:</span>
+        <span class="token keyword">void</span> <span class="token function">Union</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span><span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> fx<span class="token operator">=</span><span class="token function">getfa</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> fy<span class="token operator">=</span><span class="token function">getfa</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>siz<span class="token punctuation">[</span>fx<span class="token punctuation">]</span><span class="token operator">></span>siz<span class="token punctuation">[</span>fy<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                std<span class="token double-colon punctuation">::</span><span class="token function">swap</span><span class="token punctuation">(</span>fx<span class="token punctuation">,</span>fy<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            fa<span class="token punctuation">[</span>fx<span class="token punctuation">]</span><span class="token operator">=</span>fy<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">bool</span> <span class="token function">query</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span><span class="token keyword">int</span> y<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token function">getfa</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">==</span><span class="token function">getfa</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">node</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                fa<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>i<span class="token punctuation">;</span>
+                siz<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token keyword">private</span><span class="token operator">:</span>
+        <span class="token keyword">int</span> <span class="token function">getfa</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> x<span class="token operator">==</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">?</span>x<span class="token operator">:</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token operator">=</span><span class="token function">getfa</span><span class="token punctuation">(</span>fa<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">int</span> fa<span class="token punctuation">[</span>MAXN<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> siz<span class="token punctuation">[</span>MAXN<span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><h2 id="敌对并查集"><a href="#敌对并查集" class="headerlink" title="敌对并查集"></a>敌对并查集</h2><p>并查集所维护的是朋友的朋友是朋友的一种传递关系。</p>
 <p>也可以维护敌人的敌人是朋友的关系。</p>
 <div STYLE="page-break-after:always;s"></div>
@@ -186,21 +186,5 @@ class node&#123;
 
 <script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-</body>
+  </body>
 </html>

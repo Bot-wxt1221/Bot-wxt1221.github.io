@@ -17,7 +17,9 @@
     <meta property="og:site_name" content="Hexo">
     <meta property="og:title" content="浅谈OIer的NVIM配置"/>
     
-<meta name="generator" content="Hexo 7.0.0"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.0.0"></head>
 
   <body>
     <header>
@@ -95,226 +97,221 @@
 <p>Nvim 上最好用的 DAP 就是 nvim-dap ，经过了很久的折腾后，终于找到了方法！</p>
 <p>要装一堆插件，进入配置文件夹，Linux在<code>~/.config/nvim</code> ，Windows在<code>$HOME\AppData\Local\nvim</code> ，里面有一个 <code>lua</code> 文件夹打开，进入 <code>plugins</code> 文件夹 ，打开 <code>init.lua</code> 开始编辑。</p>
 <p>这个文件是 Nvim 的包管理器，注意到定义了一个 <code>default_plugins</code> 直接在这里面改就行了，加入这些插件：</p>
-<pre><code>  &#123;&quot;nvim-telescope/telescope.nvim&quot;,lazy=false&#125;,
-  &#123;&quot;ravenxrz/DAPInstall.nvim&quot;,lazy=false&#125;,
-  &#123;&quot;mfussenegger/nvim-dap&quot;,lazy=false&#125;,
-  &#123;&quot;rcarriga/nvim-dap-ui&quot;,lazy=false&#125;,
-  &#123;&quot;theHamsta/nvim-dap-virtual-text&quot;,lazy=false&#125;,
-</code></pre><p>然后退出重进，不出意外就开始下包了。</p>
+<pre class="line-numbers language-none"><code class="language-none">&#123;&quot;nvim-telescope&#x2F;telescope.nvim&quot;,lazy&#x3D;false&#125;,
+&#123;&quot;ravenxrz&#x2F;DAPInstall.nvim&quot;,lazy&#x3D;false&#125;,
+&#123;&quot;mfussenegger&#x2F;nvim-dap&quot;,lazy&#x3D;false&#125;,
+&#123;&quot;rcarriga&#x2F;nvim-dap-ui&quot;,lazy&#x3D;false&#125;,
+&#123;&quot;theHamsta&#x2F;nvim-dap-virtual-text&quot;,lazy&#x3D;false&#125;,<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后退出重进，不出意外就开始下包了。</p>
 <p>这里有一个非常 NTR 的事情，就是我们又要用 Vscode 的东西了，这次使用 Vscode 的调试工具！</p>
 <p>按冒号进入命令行模式开始安装</p>
-<pre><code>:DIInstall ccppr_vsc
-</code></pre><p>就开始跑命令安装了，等到出现了类似于<code>Process exited</code> 的字样就说明成功了。</p>
+<pre class="line-numbers language-none"><code class="language-none">:DIInstall ccppr_vsc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就开始跑命令安装了，等到出现了类似于<code>Process exited</code> 的字样就说明成功了。</p>
 <p>还没结束，接下来才是真正的极客！</p>
 <p>在之前打开过的 <code>plugins</code> 文件夹里面有一个 <code>configs</code>文件夹，建立新文件夹 <code>dap</code> 用于写配置文件</p>
 <p><code>dap/icon.lua</code></p>
-<pre><code class="lang-lua">local M=&#123;&#125;
-function M.setup()
-    local dap_breakpoint = &#123;
-        breakpoint = &#123;
-            text = &quot;&quot;,
-            texthl = &quot;LspDiagnosticsSignError&quot;,
-            linehl = &quot;&quot;,
-            numhl = &quot;&quot;,
-        &#125;,
-        rejected = &#123;
-            text = &quot;&quot;,
-            texthl = &quot;LspDiagnosticsSignHint&quot;,
-            linehl = &quot;&quot;,
-            numhl = &quot;&quot;,
-        &#125;,
-        stopped = &#123;
-            text = &quot;&quot;,
-            texthl = &quot;LspDiagnosticsSignInformation&quot;,
-            linehl = &quot;DiagnosticUnderlineInfo&quot;,
-            numhl = &quot;LspDiagnosticsSignInformation&quot;,
-        &#125;,
-    &#125;
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token keyword">local</span> M<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> M<span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">local</span> dap_breakpoint <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+		breakpoint <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			text <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+			texthl <span class="token operator">=</span> <span class="token string">"LspDiagnosticsSignError"</span><span class="token punctuation">,</span>
+			linehl <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+			numhl <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		rejected <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			text <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+			texthl <span class="token operator">=</span> <span class="token string">"LspDiagnosticsSignHint"</span><span class="token punctuation">,</span>
+			linehl <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+			numhl <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		stopped <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			text <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span>
+			texthl <span class="token operator">=</span> <span class="token string">"LspDiagnosticsSignInformation"</span><span class="token punctuation">,</span>
+			linehl <span class="token operator">=</span> <span class="token string">"DiagnosticUnderlineInfo"</span><span class="token punctuation">,</span>
+			numhl <span class="token operator">=</span> <span class="token string">"LspDiagnosticsSignInformation"</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span>
 
-    vim.fn.sign_define(&quot;DapBreakpoint&quot;, dap_breakpoint.breakpoint)
-    vim.fn.sign_define(&quot;DapStopped&quot;, dap_breakpoint.stopped)
-    vim.fn.sign_define(&quot;DapBreakpointRejected&quot;, dap_breakpoint.rejected)
-end
-return M
-</code></pre>
+	vim<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">sign_define</span><span class="token punctuation">(</span><span class="token string">"DapBreakpoint"</span><span class="token punctuation">,</span> dap_breakpoint<span class="token punctuation">.</span>breakpoint<span class="token punctuation">)</span>
+	vim<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">sign_define</span><span class="token punctuation">(</span><span class="token string">"DapStopped"</span><span class="token punctuation">,</span> dap_breakpoint<span class="token punctuation">.</span>stopped<span class="token punctuation">)</span>
+	vim<span class="token punctuation">.</span>fn<span class="token punctuation">.</span><span class="token function">sign_define</span><span class="token punctuation">(</span><span class="token string">"DapBreakpointRejected"</span><span class="token punctuation">,</span> dap_breakpoint<span class="token punctuation">.</span>rejected<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+<span class="token keyword">return</span> M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>dap/init.lua</p>
-<pre><code class="lang-lua">local M = &#123;&#125;
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token keyword">local</span> M <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 
-local function configure()
-end
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-local function configure_exts()
-end
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">configure_exts</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-local function configure_debuggers()
-end
+<span class="token keyword">local</span> <span class="token keyword">function</span> <span class="token function">configure_debuggers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">end</span>
 
-function M.setup()
-    configure() -- Configuration
-    configure_exts() -- Extensions
-    configure_debuggers() -- Debugger
-  require(&quot;plugins.configs.dap.keymap&quot;).setup()
-  require(&quot;plugins.configs.dap.ui&quot;).setup()
-  require(&quot;plugins.configs.dap.icon&quot;).setup()
-  require(&quot;dap.ext.vscode&quot;).load_launchjs(nil, &#123; cppdbg = &#123; &quot;c&quot;, &quot;cpp&quot;, &quot;rust&quot; &#125; &#125;)
-  local dap = require(&#39;dap&#39;)
-  dap.adapters.cppdbg = &#123;
-    id = &#39;cppdbg&#39;,
-    type = &#39;executable&#39;,
-    command = &#39;/home/wxt/.local/share/nvim/dapinstall/ccppr_vsc/extension/debugAdapters/bin/OpenDebugAD7&#39;,
-  &#125;
-end
+<span class="token keyword">function</span> M<span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token function">configure</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- Configuration</span>
+	<span class="token function">configure_exts</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- Extensions</span>
+	<span class="token function">configure_debuggers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">-- Debugger</span>
+  <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"plugins.configs.dap.keymap"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"plugins.configs.dap.ui"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"plugins.configs.dap.icon"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"dap.ext.vscode"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">load_launchjs</span><span class="token punctuation">(</span><span class="token keyword">nil</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span> cppdbg <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"c"</span><span class="token punctuation">,</span> <span class="token string">"cpp"</span><span class="token punctuation">,</span> <span class="token string">"rust"</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token keyword">local</span> dap <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'dap'</span><span class="token punctuation">)</span>
+  dap<span class="token punctuation">.</span>adapters<span class="token punctuation">.</span>cppdbg <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    id <span class="token operator">=</span> <span class="token string">'cppdbg'</span><span class="token punctuation">,</span>
+    type <span class="token operator">=</span> <span class="token string">'executable'</span><span class="token punctuation">,</span>
+    command <span class="token operator">=</span> <span class="token string">'/home/wxt/.local/share/nvim/dapinstall/ccppr_vsc/extension/debugAdapters/bin/OpenDebugAD7'</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token keyword">end</span>
 
-configure_debuggers()
+<span class="token function">configure_debuggers</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-return M
-</code></pre>
+<span class="token keyword">return</span> M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>dap/keymap.lua</p>
-<pre><code class="lang-lua">local M = &#123;&#125;
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token keyword">local</span> M <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
 
-local whichkey = require &quot;which-key&quot;
--- local legendary = require &quot;legendary&quot;
+<span class="token keyword">local</span> whichkey <span class="token operator">=</span> require <span class="token string">"which-key"</span>
+<span class="token comment">-- local legendary = require "legendary"</span>
 
--- local function keymap(lhs, rhs, desc)
---   vim.keymap.set(&quot;n&quot;, lhs, rhs, &#123; silent = true, desc = desc &#125;)
--- end
+<span class="token comment">-- local function keymap(lhs, rhs, desc)</span>
+<span class="token comment">--   vim.keymap.set("n", lhs, rhs, &#123; silent = true, desc = desc &#125;)</span>
+<span class="token comment">-- end</span>
 
-function M.setup()
-  local keymap = &#123;
-    l = &#123;
-      name = &quot;DAP&quot;,
-      R = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.run_to_cursor()&lt;cr&gt;&quot;, &quot;Run to Cursor&quot; &#125;,
-      E = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval(vim.fn.input &#39;[Expression] &gt; &#39;)&lt;cr&gt;&quot;, &quot;Evaluate Input&quot; &#125;,
-      C = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.set_breakpoint(vim.fn.input &#39;[Condition] &gt; &#39;)&lt;cr&gt;&quot;, &quot;Conditional Breakpoint&quot; &#125;,
-      U = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.toggle()&lt;cr&gt;&quot;, &quot;Toggle UI&quot; &#125;,
-      b = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_back()&lt;cr&gt;&quot;, &quot;Step Back&quot; &#125;,
-      c = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.continue()&lt;cr&gt;&quot;, &quot;Continue&quot; &#125;,
-      d = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.disconnect()&lt;cr&gt;&quot;, &quot;Disconnect&quot; &#125;,
-      e = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval()&lt;cr&gt;&quot;, &quot;Evaluate&quot; &#125;,
-      g = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.session()&lt;cr&gt;&quot;, &quot;Get Session&quot; &#125;,
-      h = &#123; &quot;&lt;cmd&gt;lua require&#39;dap.ui.widgets&#39;.hover()&lt;cr&gt;&quot;, &quot;Hover Variables&quot; &#125;,
-      S = &#123; &quot;&lt;cmd&gt;lua require&#39;dap.ui.widgets&#39;.scopes()&lt;cr&gt;&quot;, &quot;Scopes&quot; &#125;,
-      i = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_into()&lt;cr&gt;&quot;, &quot;Step Into&quot; &#125;,
-      o = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_over()&lt;cr&gt;&quot;, &quot;Step Over&quot; &#125;,
-      p = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.pause.toggle()&lt;cr&gt;&quot;, &quot;Pause&quot; &#125;,
-      q = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.close()&lt;cr&gt;&quot;, &quot;Quit&quot; &#125;,
-      r = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.repl.toggle()&lt;cr&gt;&quot;, &quot;Toggle Repl&quot; &#125;,
-      s = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.continue()&lt;cr&gt;&quot;, &quot;Start&quot; &#125;,
-      t = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.toggle_breakpoint()&lt;cr&gt;&quot;, &quot;Toggle Breakpoint&quot; &#125;,
-      x = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.terminate()&lt;cr&gt;&quot;, &quot;Terminate&quot; &#125;,
-      u = &#123; &quot;&lt;cmd&gt;lua require&#39;dap&#39;.step_out()&lt;cr&gt;&quot;, &quot;Step Out&quot; &#125;,
-    &#125;,
-  &#125;
-  local opts = &#123;
-    mode = &quot;n&quot;,
-    prefix = &quot;&lt;leader&gt;&quot;,
-    buffer = nil,
-    silent = true,
-    noremap = true,
-    nowait = false,
-  &#125;
-  whichkey.register(keymap, opts)
-  --- require(&quot;legendary.integrations.which-key&quot;).bind_whichkey(keymap, opts, false)
-  vim.api.nvim_create_autocmd(&quot;FileType&quot;, &#123;
-        pattern = &quot;cpp&quot;,
-        callback = function()
-            vim.api.nvim_buf_set_keymap(
-                0,
-                &quot;n&quot;,
-                &quot;&lt;F5&gt;&quot;,
-                &quot;:w&lt;CR&gt;:split&lt;CR&gt;:te g++ % -g -DONLINE_JUDGE -std=c++14 -O2 -o %:t:r -fsanitize=address -fsanitize=undefined&lt;CR&gt;i&quot;,
-                &#123; silent = true, noremap = true &#125;
-            )
-        end,
-    &#125;)
+<span class="token keyword">function</span> M<span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">local</span> keymap <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    l <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+      name <span class="token operator">=</span> <span class="token string">"DAP"</span><span class="token punctuation">,</span>
+      R <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.run_to_cursor()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Run to Cursor"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      E <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dapui'.eval(vim.fn.input '[Expression] > ')&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Evaluate Input"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      C <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.set_breakpoint(vim.fn.input '[Condition] > ')&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Conditional Breakpoint"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      U <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dapui'.toggle()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Toggle UI"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      b <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.step_back()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Step Back"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      c <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.continue()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Continue"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      d <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.disconnect()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Disconnect"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      e <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dapui'.eval()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Evaluate"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      g <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.session()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Get Session"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      h <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap.ui.widgets'.hover()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Hover Variables"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      S <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap.ui.widgets'.scopes()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Scopes"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      i <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.step_into()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Step Into"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      o <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.step_over()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Step Over"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      p <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.pause.toggle()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Pause"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      q <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.close()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Quit"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      r <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.repl.toggle()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Toggle Repl"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      s <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.continue()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Start"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      t <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.toggle_breakpoint()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Toggle Breakpoint"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      x <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.terminate()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Terminate"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+      u <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dap'.step_out()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Step Out"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">local</span> opts <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    mode <span class="token operator">=</span> <span class="token string">"n"</span><span class="token punctuation">,</span>
+    prefix <span class="token operator">=</span> <span class="token string">"&lt;leader>"</span><span class="token punctuation">,</span>
+    buffer <span class="token operator">=</span> <span class="token keyword">nil</span><span class="token punctuation">,</span>
+    silent <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+    noremap <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+    nowait <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+  whichkey<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>keymap<span class="token punctuation">,</span> opts<span class="token punctuation">)</span>
+  <span class="token comment">--- require("legendary.integrations.which-key").bind_whichkey(keymap, opts, false)</span>
+  vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_create_autocmd</span><span class="token punctuation">(</span><span class="token string">"FileType"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+        pattern <span class="token operator">=</span> <span class="token string">"cpp"</span><span class="token punctuation">,</span>
+        callback <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            vim<span class="token punctuation">.</span>api<span class="token punctuation">.</span><span class="token function">nvim_buf_set_keymap</span><span class="token punctuation">(</span>
+                <span class="token number">0</span><span class="token punctuation">,</span>
+                <span class="token string">"n"</span><span class="token punctuation">,</span>
+                <span class="token string">"&lt;F5>"</span><span class="token punctuation">,</span>
+                <span class="token string">":w&lt;CR>:split&lt;CR>:te g++ % -g -DONLINE_JUDGE -std=c++14 -O2 -o %:t:r -fsanitize=address -fsanitize=undefined&lt;CR>i"</span><span class="token punctuation">,</span>
+                <span class="token punctuation">&#123;</span> silent <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span> noremap <span class="token operator">=</span> <span class="token keyword">true</span> <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">)</span>
+        <span class="token keyword">end</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  
+  <span class="token keyword">local</span> keymap_v <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    l <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+      name <span class="token operator">=</span> <span class="token string">"Debug"</span><span class="token punctuation">,</span>
+      e <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;cmd>lua require'dapui'.eval()&lt;cr>"</span><span class="token punctuation">,</span> <span class="token string">"Evaluate"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+  opts <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+    mode <span class="token operator">=</span> <span class="token string">"v"</span><span class="token punctuation">,</span>
+    prefix <span class="token operator">=</span> <span class="token string">"&lt;leader>"</span><span class="token punctuation">,</span>
+    buffer <span class="token operator">=</span> <span class="token keyword">nil</span><span class="token punctuation">,</span>
+    silent <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+    noremap <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+    nowait <span class="token operator">=</span> <span class="token keyword">false</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span>
+  whichkey<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>keymap_v<span class="token punctuation">,</span> opts<span class="token punctuation">)</span>
+  <span class="token comment">--- require("legendary.integrations.which-key").bind_whichkey(keymap_v, opts, false)</span>
+<span class="token keyword">end</span>
 
-  local keymap_v = &#123;
-    l = &#123;
-      name = &quot;Debug&quot;,
-      e = &#123; &quot;&lt;cmd&gt;lua require&#39;dapui&#39;.eval()&lt;cr&gt;&quot;, &quot;Evaluate&quot; &#125;,
-    &#125;,
-  &#125;
-  opts = &#123;
-    mode = &quot;v&quot;,
-    prefix = &quot;&lt;leader&gt;&quot;,
-    buffer = nil,
-    silent = true,
-    noremap = true,
-    nowait = false,
-  &#125;
-  whichkey.register(keymap_v, opts)
-  --- require(&quot;legendary.integrations.which-key&quot;).bind_whichkey(keymap_v, opts, false)
-end
-
-return M
-</code></pre>
+<span class="token keyword">return</span> M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>dap/ui.lua</p>
-<pre><code class="lang-lua">local M=&#123;&#125;
-function M.setup()
-    require(&quot;nvim-dap-virtual-text&quot;).setup(&#123;
-        commented = true,
-    &#125;)
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token keyword">local</span> M<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">function</span> M<span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"nvim-dap-virtual-text"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+		commented <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
 
-    local dap, dapui = require(&quot;dap&quot;), require(&quot;dapui&quot;)
-    dapui.setup(&#123;
-        expand_lines = true,
-        icons = &#123; expanded = &quot;&quot;, collapsed = &quot;&quot;, circular = &quot;&quot; &#125;,
-        mappings = &#123;
-            -- Use a table to apply multiple mappings
-            expand = &#123; &quot;&lt;CR&gt;&quot;, &quot;&lt;2-LeftMouse&gt;&quot; &#125;,
-            open = &quot;o&quot;,
-            remove = &quot;d&quot;,
-            edit = &quot;e&quot;,
-            repl = &quot;r&quot;,
-            toggle = &quot;t&quot;,
-        &#125;,
-        layouts = &#123;
-            &#123;
-                elements = &#123;
-                    &#123; id = &quot;scopes&quot;, size = 0.33 &#125;,
-                    &#123; id = &quot;breakpoints&quot;, size = 0.17 &#125;,
-                    &#123; id = &quot;stacks&quot;, size = 0.25 &#125;,
-                    &#123; id = &quot;watches&quot;, size = 0.25 &#125;,
-                &#125;,
-                size = 0.33,
-                position = &quot;right&quot;,
-            &#125;,
-            &#123;
-                elements = &#123;
-                    &#123; id = &quot;repl&quot;, size = 0.45 &#125;,
-                    &#123; id = &quot;console&quot;, size = 0.55 &#125;,
-                &#125;,
-                size = 0.27,
-                position = &quot;bottom&quot;,
-            &#125;,
-        &#125;,
-        floating = &#123;
-            max_height = 0.9,
-            max_width = 0.5, -- Floats will be treated as percentage of your screen.
-            border = vim.g.border_chars, -- Border style. Can be &#39;single&#39;, &#39;double&#39; or &#39;rounded&#39;
-            mappings = &#123;
-                close = &#123; &quot;q&quot;, &quot;&lt;Esc&gt;&quot; &#125;,
-            &#125;,
-        &#125;,
-    &#125;) -- use default
-    dap.listeners.after.event_initialized[&quot;dapui_config&quot;] = function()
-        dapui.open(&#123;&#125;)
-    end
-    dap.listeners.before.event_terminated[&quot;dapui_config&quot;] = function()
-        dapui.close(&#123;&#125;)
-    end
-    dap.listeners.before.event_exited[&quot;dapui_config&quot;] = function()
-        dapui.close(&#123;&#125;)
-    end
-end
-return M
-</code></pre>
+	<span class="token keyword">local</span> dap<span class="token punctuation">,</span> dapui <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"dap"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"dapui"</span><span class="token punctuation">)</span>
+	dapui<span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span>
+		expand_lines <span class="token operator">=</span> <span class="token keyword">true</span><span class="token punctuation">,</span>
+		icons <span class="token operator">=</span> <span class="token punctuation">&#123;</span> expanded <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> collapsed <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">,</span> circular <span class="token operator">=</span> <span class="token string">""</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		mappings <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">-- Use a table to apply multiple mappings</span>
+			expand <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"&lt;CR>"</span><span class="token punctuation">,</span> <span class="token string">"&lt;2-LeftMouse>"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			open <span class="token operator">=</span> <span class="token string">"o"</span><span class="token punctuation">,</span>
+			remove <span class="token operator">=</span> <span class="token string">"d"</span><span class="token punctuation">,</span>
+			edit <span class="token operator">=</span> <span class="token string">"e"</span><span class="token punctuation">,</span>
+			repl <span class="token operator">=</span> <span class="token string">"r"</span><span class="token punctuation">,</span>
+			toggle <span class="token operator">=</span> <span class="token string">"t"</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		layouts <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			<span class="token punctuation">&#123;</span>
+				elements <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"scopes"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.33</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"breakpoints"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.17</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"stacks"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"watches"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.25</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				size <span class="token operator">=</span> <span class="token number">0.33</span><span class="token punctuation">,</span>
+				position <span class="token operator">=</span> <span class="token string">"right"</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#123;</span>
+				elements <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"repl"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.45</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+					<span class="token punctuation">&#123;</span> id <span class="token operator">=</span> <span class="token string">"console"</span><span class="token punctuation">,</span> size <span class="token operator">=</span> <span class="token number">0.55</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+				size <span class="token operator">=</span> <span class="token number">0.27</span><span class="token punctuation">,</span>
+				position <span class="token operator">=</span> <span class="token string">"bottom"</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		floating <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+			max_height <span class="token operator">=</span> <span class="token number">0.9</span><span class="token punctuation">,</span>
+			max_width <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token comment">-- Floats will be treated as percentage of your screen.</span>
+			border <span class="token operator">=</span> vim<span class="token punctuation">.</span>g<span class="token punctuation">.</span>border_chars<span class="token punctuation">,</span> <span class="token comment">-- Border style. Can be 'single', 'double' or 'rounded'</span>
+			mappings <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+				close <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token string">"q"</span><span class="token punctuation">,</span> <span class="token string">"&lt;Esc>"</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+			<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+		<span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+	<span class="token punctuation">&#125;</span><span class="token punctuation">)</span> <span class="token comment">-- use default</span>
+	dap<span class="token punctuation">.</span>listeners<span class="token punctuation">.</span>after<span class="token punctuation">.</span>event_initialized<span class="token punctuation">[</span><span class="token string">"dapui_config"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		dapui<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+	dap<span class="token punctuation">.</span>listeners<span class="token punctuation">.</span>before<span class="token punctuation">.</span>event_terminated<span class="token punctuation">[</span><span class="token string">"dapui_config"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		dapui<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+	dap<span class="token punctuation">.</span>listeners<span class="token punctuation">.</span>before<span class="token punctuation">.</span>event_exited<span class="token punctuation">[</span><span class="token string">"dapui_config"</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+		dapui<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+	<span class="token keyword">end</span>
+<span class="token keyword">end</span>
+<span class="token keyword">return</span> M<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>看得懂的可以自行修改其他地方，</p>
 <p>但是你们都要改一个地方就是 <code>dap/init.lua</code> 里面那个路径，改成 <code>OpenDebugAD7</code> 的位置。</p>
 <p>另外 <code>keymap</code>里面 有一个 <code>F5</code> 的地方，下面是编译命令，可以自行修改。</p>
 <p>再回到<code>configs</code> 下的那个 <code>init.lua</code> 就是加了一堆插件的那个，最下面加上</p>
-<pre><code class="lang-lua">require(&quot;plugins.configs.dap.init&quot;).setup()
-</code></pre>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua"><span class="token function">require</span><span class="token punctuation">(</span><span class="token string">"plugins.configs.dap.init"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h2 id="使用简介"><a href="#使用简介" class="headerlink" title="使用简介"></a>使用简介</h2><p>还是建议和 Vscode 一样用一个文件夹，因为我们的 NTR 设置，所以需要和 Vscode 一样建立 <code>.vscode</code> 文件夹，里面之用 <code>launch.json</code> 即可，里面的 <code>launch.json</code> 不能用中文注释，<code>preTasks</code> 那项要删掉，然后就可以开用了。</p>
 <p>提供一个 <code>launch.json</code> 模板，直接就能用：<a target="_blank" rel="noopener" href="https://www.luogu.com.cn/paste/teshpofs">Link</a></p>
 <p>打开一个 C++ 文件，普通模式下按下 <code>F5</code> 就可以编译，<code>Space+l</code> 可以查看调试可以用的命令，<code>Space+l+c</code> 开始调试。看得出来和 Vscode 的调试比较像。</p>
@@ -373,21 +370,5 @@ return M
 
 <script>var hingle = new Paul_Hingle({"copyright":true,"night":true});</script>
 
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-
-</body>
+  </body>
 </html>
