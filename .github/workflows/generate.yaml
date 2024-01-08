@@ -25,6 +25,7 @@ jobs:
       - name: Build
         working-directory: website
         run: |
+          npx hexo generate
           npx hexo deploy
 
       - name: Upload artifact
