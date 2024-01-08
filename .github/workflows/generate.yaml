@@ -32,9 +32,6 @@ jobs:
         with: 
           path: website/public
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
   deploy:
     needs: build
     permissions:
