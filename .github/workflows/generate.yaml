@@ -17,13 +17,13 @@ jobs:
           sudo apt install nodejs npm
         
       - name: Build
-      	working-directory:website
+        working-directory: website
         run: |
           npx hexo deploy
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-       	with:
+       	with: 
           path: website/public
   deploy:
     environment:
