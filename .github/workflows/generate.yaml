@@ -19,6 +19,7 @@ jobs:
       - name: Install nodejs
         working-directory: website
         run: |
+          rm -rf public
           git submodule update --init
           sudo apt-get update
           sudo apt-get install nodejs npm
