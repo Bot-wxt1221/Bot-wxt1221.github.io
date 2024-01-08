@@ -19,12 +19,12 @@ jobs:
       	working-directory:website
         run:|
         	npx hexo deploy
-      	- name: Upload artifact
-          uses: actions/upload-pages-artifact@v3
-       	  with:
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+       	with:
             path: website/public
-    deploy:
-      environment:
+  deploy:
+    environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
       needs: build
