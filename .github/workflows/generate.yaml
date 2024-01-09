@@ -26,8 +26,6 @@ jobs:
           git submodule update --init
           npx hexo clean
           npx hexo generate
-          npx hexo deploy
-          cp -rf icon.png public/static/img
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with: 
