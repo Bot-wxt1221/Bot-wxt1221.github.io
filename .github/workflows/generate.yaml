@@ -28,7 +28,8 @@ jobs:
           npx hexo generate
           npx hexo deploy
           cp -rf icon.png public/static/img
-
+          mkdir public/assets
+          cp -rf assets/* public/assets/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with: 
