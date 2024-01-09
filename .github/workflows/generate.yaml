@@ -16,16 +16,14 @@ jobs:
         with: 
           path: website
           fetch-depth: 0
-      - name: Install nodejs
-        working-directory: website
-        run: |
-          git submodule update --init
-          sudo apt-get update
-          sudo apt-get install nodejs npm
-        
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21
       - name: Build
         working-directory: website
         run: |
+          git submodule update --init
           npx hexo clean
           npx hexo generate
           npx hexo deploy
