@@ -1,7 +1,7 @@
 ---
-title: 网络流随笔
-date: 2024-01-03
-tags: [OI,网络流]
+title: 
+date: 2024-0
+tags: [OI,]
 toc: true
 mathjax: true
 ---
