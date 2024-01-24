@@ -3,17 +3,17 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: wxt1221的博客
+title: Bot_wxt1221的博客
 subtitle: ''
-description: '废物博客'
+description: '我现在因为gengerals太菜被认为是bot,所以现在改名为Bot_wxt1221望周知'
 keywords:
-author: wxt1221
+author: Bot_wxt1221
 language: zh_CN
 timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://wxt1221.github.io/
+url: https://bot-wxt1221.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
