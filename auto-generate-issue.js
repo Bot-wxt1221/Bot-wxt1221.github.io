@@ -24,6 +24,8 @@ const args=process.argv.slice(2);
 
 config.token=args[0];
 
+console.log(config.token);
+
 /**
 * 读取 sitemap 文件
 * 远程 sitemap 文件获取可参考 https://www.npmjs.com/package/sitemapper
