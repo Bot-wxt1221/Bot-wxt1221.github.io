@@ -66,4 +66,5 @@ jobs:
         working-directory: website
         run: |
           npx hexo generate
+          node -v
           node auto-generate-issue.js ${{ secrets.GITHUB_TOKEN }}
