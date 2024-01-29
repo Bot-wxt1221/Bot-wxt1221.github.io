@@ -45,21 +45,21 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
   comment:
-    needs:deploy
-  permissions:
-    issues: write
-    id-token: write
-  environment:
-    name: github-pages
-    url: ${{ steps.deployment.outputs.page_url }}
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with: 
-        path: website
-        fetch-depth: 0
-    - name: Generate comments
-      working-directory: website
-      run: |
-        node auto-generate-issue.js ${{ secrets.GITHUB_TOKEN }}
+    needs: deploy
+    permissions:
+      issues: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: 
+          path: website
+          fetch-depth: 0
+      - name: Generate comments
+        working-directory: website
+        run: |
+          node auto-generate-issue.js ${{ secrets.GITHUB_TOKEN }}
