@@ -90,9 +90,8 @@ console.log(link);
 const getIsInitByRequest = (id) => {
   const options = {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
-      'Authorization': 'Bearer ' + config.token,
-      'Accept': 'application/json'
+      'authorization': 'Bearer ' + config.token,
+      'content-type': 'application/json'
     },
     url: api + '?labels=' + 'Gitalk,' + id,
     method: 'GET'
@@ -167,9 +166,8 @@ const gitalkInit = ({
 
   const options = {
     headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
-      'Authorization': 'Bearer ' + config.token,
-      'Accept': 'application/json',
+      'authorization': 'Bearer ' + config.token,
+      'content-type': 'application/json',
     },
     url: api,
     body: JSON.stringify(reqBody),
