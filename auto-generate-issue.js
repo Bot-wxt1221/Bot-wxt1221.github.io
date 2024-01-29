@@ -10,7 +10,7 @@ const moment = require('moment');
 // 配置信息
 const config = {
   username: 'Bot-wxt1221', // GitHub repository 所有者，可以是个人或者组织。对应Gitalk配置中的owner
-  repo: 'blog', // 储存评论issue的github仓库名，仅需要仓库名字即可。对应 Gitalk配置中的repo
+  repo: 'Bot-wxt1221.github.io', // 储存评论issue的github仓库名，仅需要仓库名字即可。对应 Gitalk配置中的repo
   token: '', // 前面申请的 personal access token
   sitemap: path.join(__dirname, './public/sitemap.xml'), // 自己站点的 sitemap 文件地址
   cache: true, // 是否启用缓存，启用缓存会将已经初始化的数据写入配置的 gitalkCacheFile 文件，下一次直接通过缓存文件判断
