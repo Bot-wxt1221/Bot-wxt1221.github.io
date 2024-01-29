@@ -62,4 +62,5 @@ jobs:
       - name: Generate comments
         working-directory: website
         run: |
+          npx hexo generate
           node auto-generate-issue.js ${{ secrets.GITHUB_TOKEN }}
