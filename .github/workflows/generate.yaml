@@ -52,11 +52,7 @@ jobs:
     steps:
       - name: Call blog actions
         run: |
-          git clone https://github.com/Bot-wxt1221/blog.git blog
-          cd blog
-          echo 1 > genshin.txt
-          rm -rf genshin.txt
-          date > genshin.txt
-          git add .
-          git commit -m "Generate comments"
-          git push
+          curl -X POST https://api.github.com/repos/bot-wxt1221/blog/dispatches \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Authorization: token ${{secrets.TOKEN}}" \
+          --data '{"event_type": "comments"}'
