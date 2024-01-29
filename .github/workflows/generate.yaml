@@ -66,4 +66,4 @@ jobs:
         working-directory: website
         run: |
           npx hexo generate
-          node auto-generate-issue.js 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
+          node auto-generate-issue.js ${{ secrets.GITHUB_TOKEN }}
