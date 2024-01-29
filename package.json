@@ -12,6 +12,7 @@
     "version": "7.0.0"
   },
   "dependencies": {
+    "blueimp-md5": "^2.19.0",
     "cheerio": "^1.0.0-rc.12",
     "hexo": "^7.0.0",
     "hexo-generator-archive": "^2.0.0",
