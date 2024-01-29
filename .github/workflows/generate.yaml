@@ -55,10 +55,10 @@ jobs:
   runs-on: ubuntu-latest
   steps:
     - name: Checkout
-    uses: actions/checkout@v4
-    with: 
-      path: website
-      fetch-depth: 0
+      uses: actions/checkout@v4
+      with: 
+        path: website
+        fetch-depth: 0
     - name: Generate comments
       working-directory: website
       run: |
