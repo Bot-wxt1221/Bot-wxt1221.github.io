@@ -47,8 +47,7 @@ jobs:
   comment:
     needs: deploy
     permissions:
-      issues: write
-      id-token: write
+      write-all
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
