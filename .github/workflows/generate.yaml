@@ -3,11 +3,7 @@ name: Generate Hexo pages
 on: [push]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-  issue: write
-
+  write-all
 jobs:
   build:
     runs-on: ubuntu-latest
