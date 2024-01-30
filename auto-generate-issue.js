@@ -71,14 +71,9 @@ const getGitalkId = ({
 }) => {
   const link = url.parse(u);
   // 链接不存在，不需要初始化
-	console.log(link);
   if (!link || !link.pathname) {
     return false;
   }
-console.log(link);
-  // 如果不是文章链接，则不需要初始化
-console.log(link);
-console.log(link);
   return  md5(link.pathname);
 };
 
